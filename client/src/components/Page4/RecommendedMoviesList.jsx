@@ -3,9 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const ScrollContainer = styled.div`
-  position: absolute;
-  top: 70vh;
-  left: 30vw;
   display: flex;
   flex-direction: row;
   align-items: center;

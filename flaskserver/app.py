@@ -1,17 +1,22 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 from collections import Counter
 from flask_cors import CORS
 import json
+from pymongo import MongoClient
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
 # 모든 도메인에서의 요청을 허용
 CORS(app)
 
+username = None
+
 # 기존의 영화 데이터셋 로드
-df = pd.read_csv('movieDataSet3.csv')
+df = pd.read_csv('movieDataSet2.csv')
 df['genres'] = df['genres'].fillna('')
 # NaN 값을 빈 문자열로 변환
 df['summary'] = df['summary'].fillna('')
@@ -97,19 +102,47 @@ def recommend_playing_movies():
     
     if recommended_movies.empty:
         return jsonify({"error": "No movies found for the most watched genres"}), 404
+    
     return jsonify(recommendations=recommended_movies['title'].tolist())
+
+
+
+
+
+
+
+
+
+
+@app.route('/token', methods=['POST'])
+
+def receive_token():
+    # JSON 요청 데이터 추출
+    data = request.json
+    global username
+    username = data.get('userId')
+
+    # userId 값 확인
+    if username:
+        # userId를 사용하여 필요한 처리 수행
+        return jsonify({'message': 'Success', 'userId': username})
+    else:
+        # userId가 제공되지 않은 경우 오류 메시지 반환
+        return jsonify({'error': 'UserId not provided'}), 400
+
+
 
 @app.route('/RcmAllMovie', methods=['GET'])
 
 def recommend_all_movies():
     # JSON 파일로부터 데이터를 로드합니다
-    with open('all-movies.json', 'r', encoding='utf-8') as file:
+    with open('/Users/lsh549516/Desktop/웹프로그래밍/TGI/MT/data/all-movies.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
 
     # DataFrame을 생성합니다
     movies_df = pd.DataFrame(data)
     movies_df['genre_ids'] = movies_df['genre_ids'].apply(lambda x: ', '.join(map(str, x)))
-
+    movies_db = movies_df[['title', 'genre_ids', 'vote_average']]
 
     # 사용자 시청 기록
     user_df = pd.DataFrame({
@@ -178,14 +211,51 @@ def recommend_all_movies():
     # 상위 10개 영화 선택
     top_10_movies = sorted_movies.head(10)
 
-    # 결과 출력
-    # print(top_10_movies[['title', 'vote_average']])
-    # return top_10_movies
-    result = top_10_movies.to_json(orient="records")
-    parsed = json.loads(result)
 
-    # JSON 응답 반환
-    return jsonify(parsed)
+
+    recommended_titles = top_10_movies.to_dict('records')
+
+    # 딕셔너리 리스트를 JSON 형태로 변환하여 반환
+    return jsonify(recommended_titles)
+    
+
+
+# if __name__ == '__main__':
+app.run(debug=True)
+
+
+
+
+
+    # 토큰별 데이터 불러오는 코드
+    # global username
+
+    # url = "mongodb+srv://Pyung:qTIXQTenPZUaxkwq@cluster0.zf3jrtq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+
+    # client = MongoClient(url)
+
+    # db = client['forum']
+
+    # collection = db['record']
+
+    # # Fetching all documents in the collection
+    # documents = collection.find({'username': f'{username}'})
+
+    # documents_list = []
+
+    # # Printing the documents
+    # for d in documents:
+    #     documents_list.append(d)
+    # user_df = pd.DataFrame(list(documents_list))
+    # user_df['genre_ids'] = user_df['genre_ids'].apply(lambda x: ', '.join(map(str, x)))
+    # print(user_df)
+
+
+
+
+
+
+
 
 # ---------------------------------------------------------------------------------------------
 # # TF-IDF 벡터 생성 (요약 내용)
@@ -266,7 +336,3 @@ def recommend_all_movies():
 #     else:
 #         # 영화 목록이 제공되지 않은 경우
 #         return jsonify({"error": "No history provided"}), 400
-
-
-# if __name__ == '__main__':
-app.run(debug=True)

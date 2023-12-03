@@ -91,26 +91,58 @@ export const Logo = styled.div`
 `;
 
 export const TextBox = styled.div`
-  position: relative;
-  height: 559px;
   left: 15vw;
   top: 10vh;
-  font-size: 24px;
   font-family: 'Noto Sans KR', sans-serif;
-  font-weight: bold;
-  line-height: 50px;
+`;
+
+export const MapBox = styled.div`
+  position: relative;
+  left: 7vw;
+  margin-top: 17vh;
+  height: 75vh;
+  text-align: center;
+`;
+
+export const MovieBox = styled.div`
+  position: relative;
+  margin-top: 30vh;
+  margin-left: 10vw;
+  width: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    height: 12px; // 스크롤바 높이 조정
+    background-color: #2c3440;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #4f5b93; // 스크롤바 색상 조정
+    border-radius: 10px;
+    border: 2px solid #2c3440;
+    &:hover {
+      background-color: #6d7ba4; // 호버 색상 변경
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #3c4452; // 트랙 내부에 그림자 효과 적용
+    border-radius: 10px;
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: #4f5b93 #2c3440;
 `;
 
 export const StyledButton = styled.button`
-  width: 250px;
-  height: 90px;
-  padding: 10px 20px;
-  margin: 20px;
+  width: 160px;
+  height: 50px;
+  margin-left: 10px;
+  margin-bottom: 5px;
   border: none;
   background: #1C1E2C; /* Light background for the button */
   color: white; /* Dark text color for the button */
   font-weight: bold;
-  font-size: 30px;
   border-radius: 10px; /* Rounded corners for the button */
   border: 1px solid #F4F3F3;
   cursor: pointer;

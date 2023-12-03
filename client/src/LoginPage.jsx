@@ -42,6 +42,7 @@ function LoginPage() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [decoded, setDecoded] = useState('');
 
   // 서버에서 구동할때는 주소 바꿔야 합니다
   const handleLogin = async (event) => {
@@ -53,11 +54,27 @@ function LoginPage() {
       });
 
       const token = res.data.token;
-      console.log('로그인 성공:', res.data, '토큰:', token);
+      const decoded = res.data.decoded;
+
+      const userId = decoded.userId;
+
+      // console.log('로그인 성공:', res.data, '토큰:', token);
+
+      console.log(userId)
+
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
       alert('로그인 성공!');
       navigate('/');
+      axios
+        .post('http://127.0.0.1:5000/token', { userId })
+        .then((response) => {
+          // 서버로부터의 응답 처리
+          console.log('서버 응답:', response.data);
+        })
+        .catch((error) => {
+          console.error('토큰 전송 에러', error);
+        });
     } catch (error) {
       console.log('로그인 에러', error);
       alert('비밀번호가 틀렸거나, 존재하지 않는 아이디입니다.');

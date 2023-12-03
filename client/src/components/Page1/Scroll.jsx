@@ -29,13 +29,13 @@ function Page1Scroll() {
 
   const scrollRight = () => {
     var scrollableDiv = document.getElementById('scroll');
-    scrollableDiv.scrollLeft += 291;
+    scrollableDiv.scrollLeft += 391;
     setCount(count + 1);
   };
 
   const scrollLeft = () => {
     var scrollableDiv = document.getElementById('scroll');
-    scrollableDiv.scrollLeft -= 291;
+    scrollableDiv.scrollLeft -= 391;
     setCount(count - 1);
   };
 
