@@ -42,12 +42,9 @@ const LandingPage = () => {
       .then((response) => response.json()) //응답을 json형태로 변경하여 then의 response에 반환
       .then((response) => {
         console.log(response);
-        setMovies([...response.results]); //console로 찍어보면 results배열에 담겨서 데이터보내줌
-        //스프레드연산자를 사용하여 배열에 집어넣음
-        setMainMovieImage(MainMovieImage || response.results[0]);
-        //로딩될때는 MainMovieImage값이 null이기 때문에 response.results[0]값이 들어오며
-        //그다음 loding button을 눌릴때마다 MainMovieImage즉 초기이미지로 고정이된다.
-        //안그러면 로그창에 오류발생
+        const moviesWithOverview = response.results.filter(movie => movie.overview && movie.overview.trim() !== '');
+        setMovies([...moviesWithOverview]); // overview가 있는 영화들만 설정
+        setMainMovieImage(MainMovieImage || moviesWithOverview[0]);
       });
   }, []);
   const [arrowRight, setArrowRight] = useState(false);

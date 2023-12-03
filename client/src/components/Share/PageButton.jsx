@@ -36,9 +36,9 @@ function PageButton() {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      console.log('인증됐어요');
+      console.warn('인증됐어요');
     } catch (error) {
-      console.error('Error fetching data: ', error);
+      console.warn('Error fetching data: ', error);
     }
   }
   return (
