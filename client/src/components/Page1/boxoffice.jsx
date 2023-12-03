@@ -196,20 +196,20 @@ function BoxOffice() {
       };
 
       // 기존 로컬 서버로의 요청
-    const localServerResponse = await axios.post(
-      'http://localhost:3000/movieView',
-      { title: selectedTitle },
-      { headers }
-    );
-    console.log(localServerResponse.data);
+      const localServerResponse = await axios.post(
+        'http://localhost:3000/movieView',
+        { title: selectedTitle },
+        { headers }
+      );
+      console.log(localServerResponse.data);
 
-     // Flask 서버로의 요청
-    const flaskServerResponse = await axios.get(
-      `http://localhost:5000/movies?title=${encodeURIComponent(selectedTitle)}`
-    );
-    console.log(flaskServerResponse.data);
-
-      
+      // Flask 서버로의 요청
+      const flaskServerResponse = await axios.get(
+        `http://localhost:5000/movies?title=${encodeURIComponent(
+          selectedTitle
+        )}`
+      );
+      console.log(flaskServerResponse.data);
     } catch (error) {
       console.log('Error in ReservData:', error);
     }

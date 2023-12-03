@@ -37,7 +37,7 @@ export function PieChart({ selectedGenre, responseData, setSelectedGenre }) {
     datasets: [
       {
         label: '관람한 영화 수',
-        data: genreCountsData, // 이 부분에 들어가는 값을 firstGenreCount로 변경하고싶어
+        data: genreCountsData,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
