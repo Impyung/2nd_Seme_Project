@@ -81,7 +81,7 @@ const RatingButton = styled.button`
   padding: 5px;
   border: none;
   border-radius: 5px;
-  background: #1C1E2C;
+  background: #1c1e2c;
   color: #f4f3f3;
   font-family: 'Noto Sans KR', sans-serif;
   white-space: nowrap;
@@ -89,7 +89,7 @@ const RatingButton = styled.button`
   transition: background-color 0.3s, transform 0.3s;
 
   &:hover {
-    background-color: #1C1E2C;
+    background-color: #1c1e2c;
     transform: translateY(-2px); // Slight lift on hover
   }
 
@@ -133,7 +133,7 @@ const RatingInput = styled.input`
   &::-moz-range-thumb {
     width: 25px;
     height: 25px;
-    background: #4CAF50;
+    background: #4caf50;
     cursor: pointer;
     border-radius: 50%;
   }
@@ -147,7 +147,7 @@ const SubmitButton = styled.button`
   padding: 5px;
   border: none;
   border-radius: 5px;
-  background: #1C1E2C;
+  background: #1c1e2c;
   color: #f4f3f3;
   font-family: 'Noto Sans KR', sans-serif;
   white-space: nowrap;
@@ -155,7 +155,7 @@ const SubmitButton = styled.button`
   transition: background-color 0.3s, transform 0.3s;
 
   &:hover {
-    background-color: #1C1E2C;
+    background-color: #1c1e2c;
     transform: translateY(-2px); // Slight lift on hover
   }
 
@@ -164,8 +164,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-const RcmdText = styled.h2`
-`;
+const RcmdText = styled.h2``;
 
 const RcmdText2 = styled.h3`
   color: rgb(212, 212, 212);
@@ -330,7 +329,7 @@ function Page8() {
           <RecordsContainer>
             <RcmdText>관람기록</RcmdText>
             <RcmdText2>평점 입력은 추천 영화 서비스에 반영됩니다.</RcmdText2>
-            <hr style={{width:'80%'}}/>
+            <hr style={{ width: '80%' }} />
             {records.map((record) => (
               <RecordCard key={record.title}>
                 <RecordImage
@@ -344,31 +343,39 @@ function Page8() {
                   <br />
                   <RecordTheather>관람극장 : CGV명동</RecordTheather>
                   <br />
-                  {!showRatingInput&&<RatingButton onClick={() => openRatingInput(record)}>
-                    평점입력
-                  </RatingButton>}
+                  {!showRatingInput && (
+                    <RatingButton onClick={() => openRatingInput(record)}>
+                      평점입력
+                    </RatingButton>
+                  )}
                   {showRatingInput && selectedMovie === record && (
-                  <RatingInputContainer>
-                    평점 : {rating}
-                    <RatingInput
-                      type="range"
-                      value={rating}
-                      onChange={(e) => setRating(e.target.value)}
-                      min="0"
-                      max="10"
-                    />
-                    <SubmitButton onClick={submitRating}>제출하기</SubmitButton>
-                  </RatingInputContainer>
-                )}
+                    <RatingInputContainer>
+                      평점 : {rating}
+                      <RatingInput
+                        type="range"
+                        value={rating}
+                        onChange={(e) => setRating(e.target.value)}
+                        min="0"
+                        max="10"
+                      />
+                      <SubmitButton onClick={submitRating}>
+                        제출하기
+                      </SubmitButton>
+                    </RatingInputContainer>
+                  )}
                 </RecordBox>
               </RecordCard>
             ))}
           </RecordsContainer>
 
           <RecommendationsContainer>
-            <RcmdText>{localStorage.getItem('username')?localStorage.getItem('username')+'님 추천 영화':'추천 영화'}</RcmdText>
+            <RcmdText>
+              {localStorage.getItem('username')
+                ? localStorage.getItem('username') + '님 추천 영화'
+                : '추천 영화'}
+            </RcmdText>
             <RcmdText2>영화 제목을 클릭하시면 정보를 볼 수 있습니다</RcmdText2>
-            <hr style={{width:'80%'}}/>
+            <hr style={{ width: '80%' }} />
             <RecommendationsDisplay
               id="RcmdDP"
               recommendations={recommendations}

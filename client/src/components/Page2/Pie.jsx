@@ -1,19 +1,39 @@
 //Pie.jsx
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import Chart from './Chart';
-import GenreData from './genreData';
+import GenreData from './GenreData';
 ChartJS.register(ArcElement, Tooltip, Legend);
-
 export function PieChart({ selectedGenre, responseData, setSelectedGenre }) {
+  const [tvGenres, setTVGenres] = useState({}); // 장르 데이터를 저장할 상태
   const { topGenres = [], genreCounts = {} } = GenreData();
 
-  const genreCountsData = topGenres.map((genre) => genreCounts[genre] || 0);
+  // API로부터 장르 데이터 가져오기
+  useEffect(() => {
+    const apiKey = 'c4e59022826dc465ea5620d6adaa6813';
+    const tvGenreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=ko`;
+
+    fetch(tvGenreUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setTVGenres(
+          data.genres.reduce((acc, genre) => {
+            acc[genre.id] = genre.name;
+            return acc;
+          }, {})
+        );
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  // 장르 데이터를 사용하여 차트 데이터 생성
+  const genreLabels = topGenres.map((genreId) => tvGenres[genreId] || genreId);
+  const genreCountsData = topGenres.map((genreId) => genreCounts[genreId] || 0);
 
   const data = {
-    labels: topGenres,
+    labels: genreLabels,
     datasets: [
       {
         label: '관람한 영화 수',
