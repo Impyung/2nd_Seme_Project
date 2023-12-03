@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { PieChart } from './Pie';
 import useFetchData from './FetchData';
+import axios from 'axios';
 
 const ChartContainer = styled.div`
   position: relative;
@@ -34,12 +35,12 @@ const ChartImage = styled.div`
   margin: auto;
 `;
 
-function Chart({setSelectedGenre, selectedGenre, responseData}) {
+function Chart({ setSelectedGenre, selectedGenre, responseData }) {
   const { data, loading, error } = useFetchData(
     'http://localhost:3000/userRecord/'
   );
 
-  console.log(data);
+  console.log('데이터입니다', data);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -73,7 +74,7 @@ function Chart({setSelectedGenre, selectedGenre, responseData}) {
         <br /> 가장 많이 보신 장르 top3입니다.
       </ChartTopInfo>
       <ChartImage>
-      <PieChart
+        <PieChart
           selectedGenre={selectedGenre}
           responseData={responseData}
           setSelectedGenre={setSelectedGenre}
