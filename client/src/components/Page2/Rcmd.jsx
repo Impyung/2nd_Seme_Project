@@ -1,7 +1,7 @@
 //Rcmd.jsx
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useState,useEffect,useRef } from 'react'; // Import useEffect and useState
+import { useState, useEffect, useRef } from 'react'; // Import useEffect and useState
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 const TextInfo = styled.div`
   width: 40vw;
@@ -12,7 +12,7 @@ const TextInfo = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   font-family: 'Noto Sans KR', sans-serif;
-  border: 1px solid #535D7E;
+  border: 1px solid #535d7e;
   top: 11vh;
   position: relative;
 `;
@@ -26,7 +26,7 @@ const TextInfo2 = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   font-family: 'Noto Sans KR', sans-serif;
-  border: 1px solid #535D7E;
+  border: 1px solid #535d7e;
   margin-top: 10vh;
   position: relative;
   text-align: center;
@@ -51,7 +51,7 @@ const GradeInfo = styled.div`
   left: 0;
   width: 65px;
   height: 27px;
-  background: #1C1E2C;
+  background: #1c1e2c;
   border-radius: 5px;
   font-family: 'Noto Sans KR';
   font-weight: 600;
@@ -69,7 +69,7 @@ const ReservInfo = styled.button`
   width: 119px;
   height: 27px;
   border-radius: 5px;
-  background-color: #898FC0;
+  background-color: #898fc0;
   color: black;
   font-family: 'Noto Sans KR';
   font-weight: 600;
@@ -81,7 +81,7 @@ const ReservInfo = styled.button`
 
   transition: all 0.2s ease;
   &:hover {
-    background: #4F526B;
+    background: #4f526b;
     transform: translateY(+2px); // 클릭 유도를 위한 애니메이션 효과
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   }
@@ -92,17 +92,16 @@ const ReservInfo = styled.button`
   }
 `;
 
-
 // Arrow styles
 const Arrow = styled.div`
-  cursor: pointer;  
+  cursor: pointer;
   position: absolute;
   top: 100vh;
   width: 6vw;
   transform: translateY(-50%);
   z-index: 1000; // Ensure arrows are above other elements
   // Conditional styling based on props
-  ${props => props.direction === 'left' ? 'left: 0;' : 'right: 0;'}
+  ${(props) => (props.direction === 'left' ? 'left: 0;' : 'right: 0;')}
 `;
 
 const ScrollContainer = styled.div`
@@ -119,14 +118,14 @@ const ScrollContainer = styled.div`
 
   &::-webkit-scrollbar {
     height: 10px; // 스크롤바 높이 설정
-    background-color: #2C3440; // 스크롤바 배경 색상
+    background-color: #2c3440; // 스크롤바 배경 색상
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #4F5B93; // 스크롤바 썸(움직이는 부분) 색상
+    background-color: #4f5b93; // 스크롤바 썸(움직이는 부분) 색상
     border-radius: 5px; // 썸 둥근 모서리
     &:hover {
-      background-color: #6D7BA4; // 스크롤바 썸 호버 시 색상 변경
+      background-color: #6d7ba4; // 스크롤바 썸 호버 시 색상 변경
     }
   }
 
@@ -137,13 +136,10 @@ const ScrollContainer = styled.div`
 
   /* Firefox를 위한 스크롤바 스타일 */
   scrollbar-width: thin;
-  scrollbar-color: #4F5B93 #2C3440;
+  scrollbar-color: #4f5b93 #2c3440;
 `;
 
-
-
-function Rcmd({selectedGenre}) {
-  
+function Rcmd({ selectedGenre }) {
   useEffect(() => {
     if (selectedGenre) {
       // 다른 로직 ...
@@ -151,15 +147,15 @@ function Rcmd({selectedGenre}) {
       const scrollContainerPosition = scrollRef.current.offsetTop;
       window.scrollTo({
         top: scrollContainerPosition,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
     }
   }, [selectedGenre]);
 
   const scrollRef = useRef(null);
-  
-   // Function to scroll left
-   const scrollLeft = () => {
+
+  // Function to scroll left
+  const scrollLeft = () => {
     scrollRef.current.scrollBy({ left: -244, behavior: 'smooth' }); // scroll by the width of one movie container plus gap
   };
 
@@ -167,7 +163,7 @@ function Rcmd({selectedGenre}) {
   const scrollRight = () => {
     scrollRef.current.scrollBy({ left: 244, behavior: 'smooth' }); // scroll by the width of one movie container plus gap
   };
-  
+
   const [recommendations, setRecommendations] = useState([]);
   const [movieDetails, setMovieDetails] = useState([]);
 
@@ -176,40 +172,47 @@ function Rcmd({selectedGenre}) {
     const URL = 'https://api.themoviedb.org/3';
 
     const promises = titles.map(async (title) => {
-    console.log("Fetching movie details for titles: ", titles);
+      // console.log("Fetching movie details for titles: ", titles);
 
-      const tmdbResponse = await fetch(`${URL}/search/movie?api_key=${KEY}&language=ko-KR&page=1&query=${title}`);
+      const tmdbResponse = await fetch(
+        `${URL}/search/movie?api_key=${KEY}&language=ko-KR&page=1&query=${title}`
+      );
       const tmdbJson = await tmdbResponse.json();
       const movie = tmdbJson.results[0];
       if (movie) {
         return {
           title,
-          posterUrl: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null,
-          vote_average: movie.vote_average
+          posterUrl: movie.poster_path
+            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+            : null,
+          vote_average: movie.vote_average,
           // 추가적으로 필요한 정보를 여기에 추가
         };
       }
       return { title, posterUrl: null, vote_average: null };
-      
     });
     return Promise.all(promises);
   };
 
   useEffect(() => {
-    console.log("Selected Genre: ", selectedGenre);   
-    fetch(`http://localhost:5000/nowplaying?watched_genres=${encodeURIComponent(selectedGenre)}`)
-      .then(response => response.json())
-      .then(data => {
+    // console.log('Selected Genre: ', selectedGenre);
+    fetch(
+      `http://localhost:5000/nowplaying?watched_genres=${encodeURIComponent(
+        selectedGenre
+      )}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
         if (data.recommendations) {
           setRecommendations(data.recommendations);
           return fetchMovieDetails(data.recommendations);
         }
       })
-      .then(movieDetails => {
-        console.log("Fetched movie details: ", movieDetails);
+      .then((movieDetails) => {
+        // console.log('Fetched movie details: ', movieDetails);
         setMovieDetails(movieDetails);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching data: ', error);
       });
   }, [selectedGenre]);
@@ -229,9 +232,7 @@ function Rcmd({selectedGenre}) {
 
   return (
     <>
-      {!selectedGenre && (
-        <TextInfo2>Waiting...</TextInfo2>
-      )}
+      {!selectedGenre && <TextInfo2>Waiting...</TextInfo2>}
 
       {selectedGenre && ( // selectedGenre가 있을 때만 추천 영화를 표시합니다.
         <>
@@ -243,15 +244,26 @@ function Rcmd({selectedGenre}) {
             ref={scrollRef}
             style={{
               marginTop: calculateScrollContainerPosition(movieDetails.length),
-              justifyContent: movieDetails.length <= 5 ? 'center' : 'flex-start'
+              justifyContent:
+                movieDetails.length <= 5 ? 'center' : 'flex-start',
             }}
           >
             {movieDetails.map((movie, index) => (
               <div key={index} style={{ minWidth: '200px' }}>
                 <ImageInfo onClick={() => ImageData(movie)}>
-                  <img src={movie.posterUrl} alt={movie.title} style={{ width: '100%', height: '100%', borderRadius: "10px" }} />
+                  <img
+                    src={movie.posterUrl}
+                    alt={movie.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: '10px',
+                    }}
+                  />
                   <GradeInfo onClick={() => GradeData(movie)}>
-                    {movie.vote_average === 0 ? 'X.X' : movie.vote_average.toFixed(1)}
+                    {movie.vote_average === 0
+                      ? 'X.X'
+                      : movie.vote_average.toFixed(1)}
                   </GradeInfo>
                   <Link to={`/page4?movieId=${movie.id}`}>
                     <ReservInfo onClick={() => ReservData(movie)}>
@@ -270,6 +282,5 @@ function Rcmd({selectedGenre}) {
     </>
   );
 }
-
 
 export default Rcmd;

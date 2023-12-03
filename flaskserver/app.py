@@ -110,6 +110,7 @@ def recommend_all_movies():
     movies_df = pd.DataFrame(data)
     movies_df['genre_ids'] = movies_df['genre_ids'].apply(lambda x: ', '.join(map(str, x)))
 
+
     # 사용자 시청 기록
     user_df = pd.DataFrame({
         'title': ['트롤 밴드 투게더', '슈퍼 마리오 브라더스', '엘리멘탈','레오'],
