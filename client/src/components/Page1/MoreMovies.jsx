@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const MoviesWrapper = styled.div`
   position: relative; // 이제 MoviesWrapper는 position context를 제공합니다.
@@ -105,8 +106,28 @@ function MoreMovies() {
   const [movieData, setMovieData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const ReservData = (movie) => {
-    alert(`예매하기: "${movie.title}"`);
+  const ReservData = async (movieTitle) => {
+    alert(`예매하기: "${movieTitle}"`);
+
+    // 예매하기 버튼을 누르면, 해당 영화의 정보를 서버로 전송합니다.
+    // 서버에서는 해당 영화의 정보를 데이터베이스에 저장합니다.
+
+    const selectedTitle = movieTitle;
+
+    console.log('title', selectedTitle);
+
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
+
+    // 기존 로컬 서버로의 요청
+    const localServerResponse = await axios.post(
+      'http://localhost:3000/movieView',
+      { title: selectedTitle },
+      { headers }
+    );
+
+    console.log(localServerResponse.data);
   };
 
   const getMovies = async () => {
@@ -193,7 +214,9 @@ function MoreMovies() {
               key={index}
               to={`/page4?voteAvg=${movie.vote_average}&posterUrl=${movie.posterUrl}&directorName=${movie.director}&releaseDate=${movie.release_date}&genres=${movie.genres}&title=${movie.title}`}
             >
-              <ReservInfo onClick={() => ReservData(movie)}>예매</ReservInfo>
+              <ReservInfo onClick={() => ReservData(movie.title)}>
+                예매
+              </ReservInfo>
             </Link>
           </MovieContainer>
         ))}
