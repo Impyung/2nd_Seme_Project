@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { PieChart } from './Pie';
-import useFetchData from './FetchData';
-import axios from 'axios';
+import GenreData from './genreData';
 
 const ChartContainer = styled.div`
   position: relative;
@@ -36,37 +35,22 @@ const ChartImage = styled.div`
 `;
 
 function Chart({ setSelectedGenre, selectedGenre, responseData }) {
-  const { data, loading, error } = useFetchData(
-    'http://localhost:3000/userRecord/'
-  );
+  const genreData = GenreData();
 
-  console.log('데이터입니다', data);
+  if (genreData.topGenres && genreData.topGenres.length > 0) {
+    const firstGenreId = genreData.topGenres[0];
+    const firstGenreCount = genreData.genreCounts[firstGenreId];
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+    const secondGenreId = genreData.topGenres[1];
+    const secondGenreCount = genreData.genreCounts[secondGenreId];
 
-  if (Array.isArray(data) && data.length > 0) {
-    const allGenreIds = data?.flatMap((item) => item.genre_ids);
+    const thirdGenreId = genreData.topGenres[2];
+    const thirdGenreCount = genreData.genreCounts[thirdGenreId];
 
-    const genreCounts = allGenreIds.reduce((acc, id) => {
-      acc[id] = (acc[id] || 0) + 1;
-      return acc;
-    }, {});
-
-    // 가장 많이 등장하는 genre_ids를 찾습니다.
-    const topGenres = Object.entries(genreCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 3)
-      .map((item) => item[0]);
-
-    // 결과를 콘솔에 출력합니다.
-
-    // 이거 화면에 표시하는 데이터로 사용하시면 됩니다.
-    console.log('Top 3 genres:', topGenres, genreCounts);
-  } else {
-    console.log('데이터가 없거나 배열이 아닙니다.');
+    console.log(`장르 ID ${firstGenreId}의 등장 횟수:`, firstGenreCount);
+    console.log(`장르 ID ${secondGenreId}의 등장 횟수:`, secondGenreCount);
+    console.log(`장르 ID ${thirdGenreId}의 등장 횟수:`, thirdGenreCount);
   }
-
   return (
     <ChartContainer>
       <ChartTopInfo>
