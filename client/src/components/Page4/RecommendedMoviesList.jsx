@@ -12,13 +12,14 @@ const ScrollContainer = styled.div`
   padding-left: 20px;
   overflow-x: auto;
   gap: 10px;
-  padding: 20px;
+  padding: 10px;
   margin: 0 auto;
-  width: 90%;
+  width: 95%;
 
   &::-webkit-scrollbar {
-    height: 12px; // 스크롤바 높이 조정
+    height: 15px; // 스크롤바 높이 조정
     background-color: #2c3440;
+    cursor: pointer;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -56,7 +57,8 @@ overflow: hidden;
 `;
 const DescriptionText = styled.div`
   top: 75vh;
-  left: 9vw;
+  left: 7vw;
+  width: 300px;
   position: absolute;
   font-weight: bold;
   margin-bottom: 20px; // 텍스트와 스크롤 컨테이너 사이의 간격
@@ -117,7 +119,7 @@ const RecommendedMoviesList = ({ title }) => {
 
   return (
     <>
-      <DescriptionText>선택하신 "{title}" 과 <br /> 유사한 영화들입니다.</DescriptionText>
+      <DescriptionText>선택하신<br /> "{title}" 영화와 <br /> 유사한 영화들입니다.</DescriptionText>
       <ScrollContainer>
         {detailedRecommendations.map((movie, index) => (
           <div key={index} style={itemStyle}>

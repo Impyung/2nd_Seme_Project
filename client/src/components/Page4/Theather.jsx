@@ -94,6 +94,7 @@ function Theather({ nData, movieName, tData, date}) {
   const [currentDate, setCurrentDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const selectedType = useContext(Page4Context);
+  const [isDateLoading, setIsDateLoading] = useState(false);
 
   // 상영 시간표 시간순 정렬 함수
   function parseTime(playTime) {
@@ -163,6 +164,7 @@ function Theather({ nData, movieName, tData, date}) {
   // 크롤링 요청 & 데이터 저장
   useEffect(() => {
     if (tData) {
+      setIsDateLoading(true);
       let allData = [];
       let promises = [];
       const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -198,6 +200,7 @@ function Theather({ nData, movieName, tData, date}) {
       Promise.all(promises).then((results) => {
         allData.push(...results); 
         setData2(allData); 
+        setIsDateLoading(false); 
       });
     }
   }, [nData, tData, movieName, selectedDate]);
@@ -209,7 +212,8 @@ function Theather({ nData, movieName, tData, date}) {
           nData[index] && (
             <TheatherInfo key={index} style={{ left: '0px', top: `${top}px` }}>
               <TheatherName>{nData[index].place_name}</TheatherName>
-              {data2[index] &&
+              {isDateLoading && <DataLoad>데이터를 불러오고 있습니다.</DataLoad>}
+              {!isDateLoading &&data2[index] &&
                 data2[index].map((left, timeIndex) => {
                   // Check if data2 and the required indexes in data2 exist
                   const timeInfoData =
@@ -240,10 +244,10 @@ function Theather({ nData, movieName, tData, date}) {
                   );
                 })}
               <DataLoad>
-                {!data2[index] && '데이터를 불러오고 있습니다.'}
+                {isDateLoading && !data2[index] && '데이터를 불러오고 있습니다.'}
               </DataLoad>
               <DataLoad>
-                {data2[index] &&
+                {!isDateLoading &&data2[index] &&
                   data2[index].length === 0 &&
                   '등록된 정보가 없습니다.'}
               </DataLoad>
