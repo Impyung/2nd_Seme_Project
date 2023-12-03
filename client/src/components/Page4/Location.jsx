@@ -5,8 +5,8 @@ import {Rings} from "react-loader-spinner";
 
 const MapWrap = styled.div`
   position: relative;
-  width: 720px;
-  height: 420px;
+  width: 420px;
+  height: 320px;
   left: 8vw;
   top: 8vh;
   background: #2a2f42;
@@ -16,8 +16,8 @@ const MapWrap = styled.div`
 
 const Map = styled.div`
   position: absolute;
-  width: 700px;
-  height: 400px;
+  width: 400px;
+  height: 300px;
   left: 10px;
   top: 10px;
   border-radius: 5px;

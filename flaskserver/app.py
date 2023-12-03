@@ -7,9 +7,16 @@ from flask_cors import CORS
 import json
 from pymongo import MongoClient
 
+
 app = Flask(__name__)
 # 모든 도메인에서의 요청을 허용
 CORS(app)
+
+# 기존의 영화 데이터셋 로드
+df = pd.read_csv('movieDataSet2.csv')
+df['genres'] = df['genres'].fillna('')
+# NaN 값을 빈 문자열로 변환
+df['summary'] = df['summary'].fillna('')
 
 url = "mongodb+srv://Pyung:qTIXQTenPZUaxkwq@cluster0.zf3jrtq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
@@ -18,16 +25,6 @@ client = MongoClient(url)
 db = client['forum']
 
 collection = db['record']
-
-for doc in collection.find():
-    print(doc)
-
-
-# 기존의 영화 데이터셋 로드
-df = pd.read_csv('movieDataSet3.csv')
-df['genres'] = df['genres'].fillna('')
-# NaN 값을 빈 문자열로 변환
-df['summary'] = df['summary'].fillna('')
 
 # TF-IDF Vectorizer 초기화
 tfidf = TfidfVectorizer(stop_words='english')
@@ -113,19 +110,119 @@ def recommend_playing_movies():
     return jsonify(recommendations=recommended_movies['title'].tolist())
 
 
+
+
+
+
+
+
+
+
 @app.route('/token', methods=['POST'])
 
 def receive_token():
     token = request.json.get('token')
-    
     if token:
-        print('받은 토큰:', token)
-        # 추가 처리 (예: 인증, 데이터베이스 저장 등)
-        return jsonify({'message': '토큰 수신 성공'}), 200
+        # 몽고디비에서 토큰과 일치하는 시청 기록 조회
+        # for doc in collection.find():
+        #     print(doc)
+        user_history = collection.find({'username': token})
+        if user_history:
+            # 시청 기록에서 필요한 데이터 추출 및 반환
+            print(jsonify(user_history))
+            return jsonify(user_history)
+        else:
+            return jsonify({'error': 'No history found for given token'}), 404
     else:
-        return jsonify({'error': '토큰이 제공되지 않음'}), 400
-    
+        return jsonify({'error': 'Token not provided'}), 400
 
+
+@app.route('/RcmAllMovie', methods=['GET'])
+
+def recommend_all_movies():
+    # JSON 파일로부터 데이터를 로드합니다
+    with open('all-movies.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    # DataFrame을 생성합니다
+    movies_df = pd.DataFrame(data)
+    movies_df['genre_ids'] = movies_df['genre_ids'].apply(lambda x: ', '.join(map(str, x)))
+
+    # 사용자 시청 기록
+    user_df = pd.DataFrame({
+        'title': ['트롤 밴드 투게더', '슈퍼 마리오 브라더스', '엘리멘탈','레오'],
+        'genre_ids': ['16, 10751, 10402, 14, 35', '16,10751,12,14,35', '16,35,10751,14,10749','16,35,10751'],
+        'vote_average': [7.200, 7.746, 7.7,7.803],
+        'user_rating': [8.6, 8, 9, 7]
+    })
+
+    # 장르별 사용자 평점을 저장할 딕셔너리 초기화
+    genre_ratings = {}
+
+    # 각 영화에 대해 반복
+    for index, row in user_df.iterrows():
+        # 영화의 장르 리스트
+        genres = row['genre_ids'].split(',')
+        # 각 장르에 대해 사용자 평점 추가
+        for genre in genres:
+            genre = genre.strip()  # 공백 제거
+            if genre in genre_ratings:
+                genre_ratings[genre].append(row['user_rating'])
+            else:
+                genre_ratings[genre] = [row['user_rating']]
+
+    # 최소 평가 횟수 설정
+    min_reviews = 2
+
+    # 장르별 가중 평균 점수 계산 (최소 평가 횟수 이상인 경우에만)
+    genre_avg_ratings = {genre: sum(ratings) / len(ratings) for genre, ratings in genre_ratings.items() if len(ratings) >= min_reviews}
+
+    # 상위 3개 장르 찾기 (가중 평균 점수가 계산된 장르 중에서)
+    top_genres = sorted(genre_avg_ratings, key=genre_avg_ratings.get, reverse=True)[:4]
+
+
+    # 함수 정의: 주어진 장르 리스트가 영화의 장르에 모두 포함되는지 확인
+    def contains_all_genres(movie_genres, genres_to_check):
+        return all(genre in movie_genres for genre in genres_to_check)
+
+    # 추천 영화 목록
+    recommendations = {
+        "1st_priority": [],
+        "2nd_priority": []
+    }
+
+    # 전체 영화 데이터에서 장르별로 추천
+    for index, row in movies_df.iterrows():
+        movie_genres = row['genre_ids'].split(', ')
+
+        # 1순위 추천: 상위 4개 장르 모두 포함
+        if contains_all_genres(movie_genres, top_genres):
+            recommendations["1st_priority"].append(row['title'])
+
+        # 2순위 추천: 상위 3개 장르 모두 포함
+        elif contains_all_genres(movie_genres, top_genres[:3]):
+            recommendations["2nd_priority"].append(row['title'])
+
+    # 결과 출력
+    all_recommendations = (recommendations["1st_priority"] + recommendations["2nd_priority"])
+
+    # 중복 제거
+    unique_recommendations = list(set(all_recommendations))
+
+    # 평점에 따라 영화 정렬
+    sorted_movies = movies_df[movies_df['title'].isin(unique_recommendations)].sort_values(by='vote_average', ascending=False)
+
+    # 상위 10개 영화 선택
+    top_10_movies = sorted_movies.head(10)
+
+    # 결과 출력
+    # print(top_10_movies[['title', 'vote_average']])
+    # return top_10_movies
+    result = top_10_movies.to_json(orient="records")
+    parsed = json.loads(result)
+
+    # JSON 응답 반환
+    return jsonify(parsed)
 
 # ---------------------------------------------------------------------------------------------
 # # TF-IDF 벡터 생성 (요약 내용)

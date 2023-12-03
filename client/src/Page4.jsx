@@ -11,6 +11,8 @@ import {
   DropDownOption,
   MapContainer,
   TheaterContainer,
+  MovieBox,
+  MapBox,
 } from './components/Page4Style';
 import axios from 'axios';
 // import Scroll from './components/Page4/Scroll';
@@ -227,24 +229,29 @@ function Page4() {
           )}
 
           {mapOpen && (
-            <MapContainer>
-              <KakaoMap onDataChange={handleDataChange} />
-              <TextBox>
-                <span>근처 영화관 검색결과입니다.</span>
-                <br />
-                <span>원하시는 버튼을 눌러주세요.</span>
-                <br />
-                <StyledButton onClick={ShowMovieData}>
-                  실시간 예매 현황
-                </StyledButton>
-                <br />
-                <StyledButton onClick={() => window.location.reload()}>
-                  위치 새로고침
-                </StyledButton>
-                <br />
-              </TextBox>
-              <RecommendedMoviesList title={title} />
-            </MapContainer>
+            <div style={{ height: '100vh', display: 'flex' }}>
+              <MovieBox>
+                <RecommendedMoviesList title={title} />
+              </MovieBox>
+            
+              <MapBox>
+                <TextBox>
+                  <span>근처 영화관 검색결과입니다.</span>
+                  <br />
+                  <span>원하시는 버튼을 눌러주세요.</span>
+                  <br />
+                  <StyledButton onClick={ShowMovieData}>
+                    실시간 예매 현황
+                  </StyledButton>
+                  <br />
+                  <StyledButton onClick={() => window.location.reload()}>
+                    위치 새로고침
+                  </StyledButton>
+                  <br />
+                </TextBox>
+                <KakaoMap onDataChange={handleDataChange} />
+              </MapBox>
+            </div>
           )}
         </Body>
         <Footer/>
