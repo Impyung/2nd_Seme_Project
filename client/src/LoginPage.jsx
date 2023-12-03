@@ -42,6 +42,7 @@ function LoginPage() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [decoded, setDecoded] = useState('');
 
   // 서버에서 구동할때는 주소 바꿔야 합니다
   const handleLogin = async (event) => {
@@ -53,19 +54,27 @@ function LoginPage() {
       });
 
       const token = res.data.token;
-      console.log('로그인 성공:', res.data, '토큰:', token);
+      const decoded = res.data.decoded;
+
+      const userId = decoded.userId;
+
+      console.log('로그인 성공:', res.data, '토큰:', token, 'decoded:', userId);
+
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
-      navigate('/');
-      axios.post('http://127.0.0.1:5000/token', { token })
-      .then((response) => {
-        // 서버로부터의 응답 처리
-        console.log('서버 응답:', response.data);
-      })
-      .catch((error) => {
-        console.error('토큰 전송 에러', error);
-      });
 
+      console.log(userId);
+
+      navigate('/');
+      axios
+        .post('http://127.0.0.1:5000/token', { userId })
+        .then((response) => {
+          // 서버로부터의 응답 처리
+          console.log('서버 응답:', response.data);
+        })
+        .catch((error) => {
+          console.error('토큰 전송 에러', error);
+        });
     } catch (error) {
       console.log('로그인 에러', error);
     }
@@ -89,41 +98,45 @@ function LoginPage() {
 
       <Body>
         <BodyContainer>
-        <Logo1>
-          <img src='/logo2.png' alt='Logo' style={{ width: '100%', height: '100%' }} />
-        </Logo1>
-        <Welcome>
-          반갑습니다.{'\n'}
-          <span>
-            TGI의 <BoldText>MOVIEPARTNER </BoldText>입니다.{' '}
-          </span>
-        </Welcome>
-              <InputGroup>
-        <StyledIcon icon={faUser} />
-        <IdInput
-          type="text"
-          placeholder="아이디를 입력해 주세요"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </InputGroup>
+          <Logo1>
+            <img
+              src="/logo2.png"
+              alt="Logo"
+              style={{ width: '100%', height: '100%' }}
+            />
+          </Logo1>
+          <Welcome>
+            반갑습니다.{'\n'}
+            <span>
+              TGI의 <BoldText>MOVIEPARTNER </BoldText>입니다.{' '}
+            </span>
+          </Welcome>
+          <InputGroup>
+            <StyledIcon icon={faUser} />
+            <IdInput
+              type="text"
+              placeholder="아이디를 입력해 주세요"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </InputGroup>
 
-      <InputGroup>
-        <StyledIcon icon={faLock} />
-        <PwInput
-          type="password"
-          placeholder="비밀번호를 입력해 주세요"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </InputGroup>
-        <LoginButton onClick={handleLogin}>로그인하기</LoginButton>
-        <Caption>
-          새로운 회원이신가요? |&nbsp; <Link to="/signup"> 회원가입</Link>
-        </Caption>
+          <InputGroup>
+            <StyledIcon icon={faLock} />
+            <PwInput
+              type="password"
+              placeholder="비밀번호를 입력해 주세요"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </InputGroup>
+          <LoginButton onClick={handleLogin}>로그인하기</LoginButton>
+          <Caption>
+            새로운 회원이신가요? |&nbsp; <Link to="/signup"> 회원가입</Link>
+          </Caption>
         </BodyContainer>
       </Body>
-      <Footer/>
+      <Footer />
     </Container>
   );
 }

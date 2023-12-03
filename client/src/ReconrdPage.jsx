@@ -309,6 +309,13 @@ function Page8() {
     }
   };
 
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' }; // 날짜 형식 옵션
+    return new Intl.DateTimeFormat('ko-KR', options).format(
+      new Date(dateString)
+    );
+  }
+
   return (
     <Container>
       <Header>
@@ -340,9 +347,12 @@ function Page8() {
                 <RecordBox>
                   <RecordTitle>제목 : {record.title}</RecordTitle>
                   <br />
-                  <RecordTime>관람일 : 23.12.3</RecordTime>
                   <br />
-                  <RecordTheather>관람극장 : CGV명동</RecordTheather>
+                  <RecordTime>
+                    관람일 : {formatDate(record.viewDate)}
+                  </RecordTime>
+                  <br />
+                  {/* <RecordTheather>관람극장 : CGV명동</RecordTheather> */}
                   <br />
                   {!showRatingInput && (
                     <RatingButton onClick={() => openRatingInput(record)}>
