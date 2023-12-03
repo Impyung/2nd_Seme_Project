@@ -37,11 +37,12 @@ const ImageContainer = styled.div`
 `;
 
 const MainImage = ({ image, title, text }) => {
+  const truncatedText = text.length > 150 ? text.substring(0, 300) + "..." : text;
   return (
     <ImageContainer image={image} >
       <div>
         <h2 style={{fontSize:'1.7vw'}}>{title}</h2>
-        <p style={{fontSize:'1.2vw'}}>{text}</p>
+        <p style={{ fontSize: '1.2vw' }}>{truncatedText}</p>
       </div>
     </ImageContainer>
   );

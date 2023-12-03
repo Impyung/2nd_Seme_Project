@@ -109,7 +109,6 @@ function BoxOffice() {
   const [currentDate, setCurrentDate] = useState(
     dayjs().subtract(1, 'day').format('YYYYMMDD')
   );
-  console.log(movieData,moviePost);
 
   const getMovies = async () => {
     // searchName 파라미터 추가

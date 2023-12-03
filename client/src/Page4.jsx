@@ -29,6 +29,7 @@ import megabox from './components/Page4/TN/megabox.json';
 import Member from './components/Share/Member';
 import { jwtDecode } from 'jwt-decode';
 import Footer from './components/Share/Footer';
+import { Link } from 'react-router-dom';
 
 export const Page4Context = createContext();
 
@@ -179,20 +180,36 @@ function Page4() {
       setTData(theaterData);
     }
   }, [dataOpen, nData]);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const position = window.scrollY;
+      setIsHeaderVisible(position === 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
       <Container>
-        <Header>
-          <Logo>
+        <Header isvisible={isHeaderVisible}>
+        <Logo>
+          <Link to="/">
             <img
               src="/logo2.png"
               alt="Logo"
               style={{ width: '100%', height: '100%' }}
             />
-          </Logo>
-          <PageButton />
-          {token ? <Member /> : <Login />}
-        </Header>
+          </Link>
+        </Logo>
+        <PageButton />
+        {token ? <Member /> : <Login />}
+      </Header>
 
         <Body>
           {dataOpen && (
