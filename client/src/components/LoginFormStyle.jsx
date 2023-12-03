@@ -8,7 +8,6 @@ export const Container = styled.div`
 
 export const Body = styled.div`
   position: relative;
-  height: 100vh;
   color: #f4f3f3;
   background: linear-gradient(0deg, #2A2F42 30%, #1C1E2C 70%); // Adjust the gradient direction and color stops
 `;
@@ -52,9 +51,9 @@ export const Logo = styled.div`
 
 
 export const FormContainer = styled.div`
+  margin-top: 10vh; /* 폼 상단 여백 */
   display: flex;
   position: relative;
-  top: 11vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -79,14 +78,27 @@ export const Label = styled.label`
 export const StyledInput = styled.input`
   width: 30vw; /* 폼 너비에 맞춤 */
   height: 6vh; /* 입력 필드 높이 */
-  margin-bottom: 3vh; /* 입력 필드 간격 */
-  padding: 0 15px; /* 내부 여백 */
+  margin-bottom: 5vh; /* 입력 필드 간격 */
   border-radius: 5px; /* 모서리 둥글기 */
   background: #D9D9D9;/* 입력 필드 배경색 */
   font-size: 16px; /* 글꼴 크기 */
   font-family: 'Notosans KR';
   color: black; /* 글자색 */
-  text-indent: 10px;
+  text-indent: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+`;
+
+export const StyledInput2 = styled.input`
+  width: 30vw; /* 폼 너비에 맞춤 */
+  flex-grow: 1; // 입력란이 가능한 많은 공간을 차지하도록 설정
+  height: 6vh; /* 입력 필드 높이 */
+  margin-bottom: 3vh; /* 입력 필드 간격 */
+  border-radius: 5px; /* 모서리 둥글기 */
+  background: #D9D9D9;/* 입력 필드 배경색 */
+  font-size: 16px; /* 글꼴 크기 */
+  font-family: 'Notosans KR';
+  color: black; /* 글자색 */
+  text-indent: 5px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
@@ -146,7 +158,7 @@ export const AssignComplete = styled.div`
   left: 372px;
   top: 307px;
 
-  font-family: 'Ingrid Darling';
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 48px;
@@ -164,7 +176,7 @@ export const TextOfLogin = styled.div`
   left: 310px;
   top: 394px;
 
-  font-family: 'Ingrid Darling';
+  font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -185,7 +197,7 @@ export const LoginButton = styled.button`
   background: #898FC0;
   border-radius: 10px;
   line-height: 15px;
-
+  font-family: 'Noto Sans KR';
 `;
 
 export const CheckLogo = styled.div`
@@ -204,3 +216,16 @@ export const CheckLogo = styled.div`
 // export const AssignComplete = styled.div`
   
 // `;
+
+export const InputWithButton = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 3vh;
+  width: 30vw; // 폼 너비에 맞춤
+  gap: 1vw; // 입력 필드와 버튼 사이의 간격
+  button {
+    flex-shrink: 0; // 버튼의 크기가 축소되지 않도록 설정
+  }
+`;
+
+

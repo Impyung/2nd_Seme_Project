@@ -52,7 +52,7 @@ const TitleButton = styled.div  `
   color: #f4f3f3;
   font-family: 'Noto Sans KR', sans-serif;
   white-space: nowrap;
-overflow: hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
 `;
 const DescriptionText = styled.div`

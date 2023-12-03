@@ -11,7 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 # 기존의 영화 데이터셋 로드
-df = pd.read_csv('movieDataSet2.csv')
+df = pd.read_csv('movieDataSet3.csv')
 df['genres'] = df['genres'].fillna('')
 # NaN 값을 빈 문자열로 변환
 df['summary'] = df['summary'].fillna('')

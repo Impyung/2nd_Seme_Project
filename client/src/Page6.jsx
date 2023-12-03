@@ -19,6 +19,7 @@ import Footer from './components/Share/Footer';
 import { Grid } from 'react-loader-spinner';
 import styled from 'styled-components';
 import MovieModal from './components/Page6/MovieModal';
+import ToTop from './components/Page1/ToTop';
 function Page6() {
   // const [count, setCount] = useState(0)
 
@@ -49,7 +50,9 @@ function Page6() {
         `${URL}?api_key=${KEY}&language=ko-KR&page=1&query=${searchName}`
       )
     ).json();
-    setMovies(json.results);
+    // 포스터 이미지가 있는 영화만 필터링
+    const filteredMovies = json.results.filter(movie => movie.poster_path);
+    setMovies(filteredMovies);
     setLoading(false);
   };
 
@@ -159,6 +162,7 @@ const onSelectMovie = (movie) => {
         </ResultContainer>
         {/* {NAME ? <Page6Scroll /> : null} */}
       </Body>
+      <ToTop />
       <Footer/>
     </Container>
   );
