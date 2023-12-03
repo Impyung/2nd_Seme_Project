@@ -137,4 +137,5 @@ export const TheaterContainer = styled.div`
 position: relative;
 top:11vh;
 height: 100vh;
+font-family: 'Noto Sans KR', sans-serif; 
 `;

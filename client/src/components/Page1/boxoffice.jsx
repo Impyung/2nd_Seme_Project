@@ -118,7 +118,8 @@ function BoxOffice() {
       )
     ).json();
     const boxOfficeData = koficResponse.boxOfficeResult.dailyBoxOfficeList;
-    const movieTitles = boxOfficeData.map((movie) => movie.movieNm);
+    const filteredMovies = boxOfficeData.filter(movie => movie.movieNm !== '괴물'); // '괴물' 영화 제외
+    const movieTitles = filteredMovies.map(movie => movie.movieNm);
     setMovieData(movieTitles);
   };
 
@@ -131,43 +132,34 @@ function BoxOffice() {
         `${URL}/search/movie?api_key=${KEY}&language=ko-KR&page=1&query=${title}`
       );
       const tmdbJson = await tmdbResponse.json();
-      const movie = tmdbJson.results[0];
-      if (movie) {
-        // Fetch additional movie details by movie ID to get the director's information
-        const movieDetailsResponse = await fetch(
-          `${URL}/movie/${movie.id}?api_key=${KEY}&language=ko-KR&append_to_response=credits`
-        );
-        const movieDetailsJson = await movieDetailsResponse.json();
-        const director = movieDetailsJson.credits.crew.find(
-          (person) => person.job === 'Director'
-        );
-        const genres = movieDetailsJson.genres
-          .slice(0, 2)
-          .map((genre) => genre.name);
-        return {
-          title,
-          posterUrl: movie.poster_path
-            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-            : null,
-          vote_average: movie.vote_average,
-          release_date: movie.release_date,
-          director: director ? director.name : 'Director not found',
-          genres: genres.join(' / '),
-        };
-      }
+      // Filter out movies without a poster
+    const moviesWithPoster = tmdbJson.results.filter(movie => movie.poster_path);
 
-      // Return a placeholder if the movie is not found
+    if (moviesWithPoster.length > 0) {
+      const movie = moviesWithPoster[0]; // Taking the first movie that has a poster
+      // Fetch additional movie details by movie ID
+      const movieDetailsResponse = await fetch(`${URL}/movie/${movie.id}?api_key=${KEY}&language=ko-KR&append_to_response=credits`);
+      const movieDetailsJson = await movieDetailsResponse.json();
+      const director = movieDetailsJson.credits.crew.find((person) => person.job === 'Director');
+      const genres = movieDetailsJson.genres.slice(0, 2).map((genre) => genre.name);
+
       return {
         title,
-        posterUrl: null,
-        vote_average: null,
-        director: 'Director not found',
-        genres: 'Genres not found',
+        posterUrl: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+        vote_average: movie.vote_average,
+        release_date: movie.release_date,
+        director: director ? director.name : 'Director not found',
+        genres: genres.join(' / '),
       };
-    });
-    return Promise.all(promises);
-  };
+    }
 
+    // If no movies with posters are found, return null or an empty object
+    return null;
+  });
+
+  // Filter out any null results
+  return (await Promise.all(promises)).filter(movie => movie !== null);
+};
   useEffect(() => {
     getMovies();
   }, []);

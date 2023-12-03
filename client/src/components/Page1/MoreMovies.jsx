@@ -165,7 +165,7 @@ function MoreMovies() {
     <MoviesWrapper>
       <div style={{ width: '100%', margin: '10rem auto', marginTop: '8rem', marginBottom: '4rem'  }}>
         <hr />
-        <h2 style={{fontSize:'1.6vw', fontFamily: 'Noto Sans KR, sans-serif'}}>무비 차트</h2>
+        <h2 style={{fontSize:'1.6vw', fontFamily: 'Noto Sans KR, sans-serif',textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'}}>무비 차트</h2>
       </div>
       <MoviesGrid>
       {movieData.map((movie, index) => (

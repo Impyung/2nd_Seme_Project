@@ -12,7 +12,7 @@ const SearchInfo = styled.div`
   top: 16vh;
   background: linear-gradient(0deg, #2A2F42 10%, #1C1E2C 90%); // Adjust the gradient direction and color stops
   border: 2px solid #f4f3f3;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -33,6 +33,7 @@ const SearchInput = styled.input`
   font-size: 1.3vw;
   line-height: 2vw;
   text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   ::placeholder {
     color: #f4f3f3; /* 원하는 색상으로 변경 */
   }
