@@ -49,6 +49,8 @@ function LoginForm() {
 
   const [verNum, setVerNum] = useState('');
 
+  const [isVerified, setIsVerified] = useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const userData = { username, email, password, verificationCode };
@@ -86,8 +88,10 @@ function LoginForm() {
       });
 
       console.log('인증번호 확인 성공');
+      setIsVerified(true);
     } catch (error) {
       console.error('인증번호 확인 오류:', error);
+      setIsVerified(false);
     }
   };
   const buttonStyle = {
@@ -100,7 +104,7 @@ function LoginForm() {
     cursor: 'pointer',
     fontFamily: "'Noto Sans KR'",
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-    transition: 'all 0.2s ease'
+    transition: 'all 0.2s ease',
   };
   return (
     <Container>
@@ -142,9 +146,13 @@ function LoginForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-               <button type="button" style={buttonStyle} onClick={handleSendVerificationCode}>
-          인증번호 받기
-        </button>
+              <button
+                type="button"
+                style={buttonStyle}
+                onClick={handleSendVerificationCode}
+              >
+                인증번호 받기
+              </button>
             </InputWithButton>
             <Label htmlFor="password">비밀번호 *</Label>
             <StyledInput
@@ -166,9 +174,13 @@ function LoginForm() {
                 onChange={(e) => setVerificationCode(e.target.value)}
                 required
               />
-              <button type="button" style={buttonStyle} onClick={handleVerificationCodeCheck}>
-          인증번호 확인
-        </button>
+              <button
+                type="button"
+                style={buttonStyle}
+                onClick={handleVerificationCodeCheck}
+              >
+                인증번호 확인
+              </button>
             </InputWithButton>
             {/* <button type="button" onClick={handleSendVerificationCode}>
               인증번호 받기
@@ -178,7 +190,9 @@ function LoginForm() {
               인증번호 확인
             </button> */}
 
-            <SubmitButton type="submit">가입하기</SubmitButton>
+            <SubmitButton type="submit" disabled={!isVerified}>
+              가입하기
+            </SubmitButton>
 
             {/* 
           <Label htmlFor="passwordConfirm">비밀번호 확인 *</Label>
