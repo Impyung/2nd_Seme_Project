@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { PieChart } from './Pie';
-import GenreData from './genreData';
+import GenreData from './GenreData';
 
 const ChartContainer = styled.div`
   position: relative;
