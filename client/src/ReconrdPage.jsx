@@ -204,6 +204,7 @@ function Page8() {
       });
   };
 
+
   const fetchMovieDetails = async (title) => {
     const KEY = '0d38cc635c10e090910f3d7ea7194e05';
     const URL = 'https://api.themoviedb.org/3';

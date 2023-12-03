@@ -57,6 +57,15 @@ function LoginPage() {
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
       navigate('/');
+      axios.post('http://127.0.0.1:5000/token', { token })
+      .then((response) => {
+        // 서버로부터의 응답 처리
+        console.log('서버 응답:', response.data);
+      })
+      .catch((error) => {
+        console.error('토큰 전송 에러', error);
+      });
+
     } catch (error) {
       console.log('로그인 에러', error);
     }

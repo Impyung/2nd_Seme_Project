@@ -55,23 +55,6 @@ function Page4() {
   const [username, setUsername] = useState('');
   const [selection, setSelection] = useState('');
 
-  const getRecommendations = () => {
-    axios
-      .get(`http://127.0.0.1:5000/RcmAllMovie`)
-      .then(async (response) => {
-        const title = []
-        for (let i = 0; i < 10; i++) {
-          if (response.data[i]) {
-            title[i] = response.data[i].title
-          }
-        }
-        console.log(title);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error('There was an error!', error);
-      });
-  };
 
   // 드롭다운 선택
   const DropDown = (event) => {
@@ -87,7 +70,6 @@ function Page4() {
       const decodedToken = jwtDecode(storedToken);
       setUsername(decodedToken.username);
     }
-    getRecommendations()
   }, []);
 
   // 많은 영화관중 주요 3사 영화관만 선별
