@@ -9,8 +9,10 @@ import {
   FormTitle,
   Label,
   StyledInput,
+  StyledInput2,
   SubmitButton,
   Caption,
+  InputWithButton,
 } from './components/LoginFormStyle';
 // FontAwesome 및 기타 필요한 컴포넌트 import
 import PageButton from './components/Share/PageButton';
@@ -88,7 +90,18 @@ function LoginForm() {
       console.error('인증번호 확인 오류:', error);
     }
   };
-
+  const buttonStyle = {
+    height: '6vh', // 높이
+    borderRadius: '5px',
+    background: '#898FC0',
+    color: '#fff',
+    border: 'none',
+    fontSize: '16px',
+    cursor: 'pointer',
+    fontFamily: "'Noto Sans KR'",
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    transition: 'all 0.2s ease'
+  };
   return (
     <Container>
       <Header isvisible={isHeaderVisible}>
@@ -120,14 +133,19 @@ function LoginForm() {
               required
             />
             <Label htmlFor="email">이메일 *</Label>
-            <StyledInput
-              id="email"
-              type="email"
-              placeholder="이메일을 입력해주세요."
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+            <InputWithButton>
+              <StyledInput2
+                id="email"
+                type="email"
+                placeholder="이메일을 입력해주세요."
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+               <button type="button" style={buttonStyle} onClick={handleSendVerificationCode}>
+          인증번호 받기
+        </button>
+            </InputWithButton>
             <Label htmlFor="password">비밀번호 *</Label>
             <StyledInput
               id="password"
@@ -139,21 +157,26 @@ function LoginForm() {
             />
 
             <Label htmlFor="verificationCode">인증 코드 *</Label>
-            <StyledInput
-              id="verificationCode"
-              type="text"
-              placeholder="이메일로 받은 인증 번호를 입력해주세요."
-              value={verificationCode}
-              onChange={(e) => setVerificationCode(e.target.value)}
-              required
-            />
-            <button type="button" onClick={handleSendVerificationCode}>
-              인증 번호 전송
+            <InputWithButton>
+              <StyledInput2
+                id="verificationCode"
+                type="text"
+                placeholder="이메일로 받은 인증 번호를 입력해주세요."
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+                required
+              />
+              <button type="button" style={buttonStyle} onClick={handleVerificationCodeCheck}>
+          인증번호 확인
+        </button>
+            </InputWithButton>
+            {/* <button type="button" onClick={handleSendVerificationCode}>
+              인증번호 받기
             </button>
 
             <button type="button" onClick={handleVerificationCodeCheck}>
               인증번호 확인
-            </button>
+            </button> */}
 
             <SubmitButton type="submit">가입하기</SubmitButton>
 

@@ -1,51 +1,66 @@
 //Pie.jsx
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
+import Chart from './Chart';
+import GenreData from './GenreData';
 ChartJS.register(ArcElement, Tooltip, Legend);
+export function PieChart({ selectedGenre, responseData, setSelectedGenre }) {
+  const [tvGenres, setTVGenres] = useState({}); // 장르 데이터를 저장할 상태
+  const { topGenres = [], genreCounts = {} } = GenreData();
 
-export const data = {
-  labels: ['SF', '코미디', '드라마'],
-  datasets: [
-    {
-      label: '관람한 영화 수',
-      data: [3, 2, 3], // 코미디를 2로, 액션을 4로 변경
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        // 'rgba(75, 192, 192, 0.2)', // 초록색으로 변경 (액션)
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        // 'rgba(75, 192, 192, 1)', // 초록색으로 변경 (액션)
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
+  // API로부터 장르 데이터 가져오기
+  useEffect(() => {
+    const apiKey = 'c4e59022826dc465ea5620d6adaa6813';
+    const tvGenreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=ko`;
 
+    fetch(tvGenreUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        setTVGenres(
+          data.genres.reduce((acc, genre) => {
+            acc[genre.id] = genre.name;
+            return acc;
+          }, {})
+        );
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
-// // 안내 문구 스타일
-// const GuideText = styled.div`
-//   font-size: 18px;
-//   color: #f4f3f3;
-//   padding: 5px;
-//   border-radius: 10px;
-//   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-//   font-family: 'Noto Sans KR', sans-serif;
-//   border: 1px solid #535D7E;
-// `;
-export function PieChart({selectedGenre, responseData, setSelectedGenre}) { // onGenreSelect 추가} {
+  // 장르 데이터를 사용하여 차트 데이터 생성
+  const genreLabels = topGenres.map((genreId) => tvGenres[genreId] || genreId);
+  const genreCountsData = topGenres.map((genreId) => genreCounts[genreId] || 0);
+
+  const data = {
+    labels: genreLabels,
+    datasets: [
+      {
+        label: '관람한 영화 수',
+        data: genreCountsData, // 이 부분에 들어가는 값을 firstGenreCount로 변경하고싶어
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          // 'rgba(75, 192, 192, 0.2)', // 초록색으로 변경 (액션)
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          // 'rgba(75, 192, 192, 1)', // 초록색으로 변경 (액션)
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+  // onGenreSelect 추가} {
   console.log('onGenreSelect prop in PieChart:', setSelectedGenre);
   const [selectedInfo, setSelectedInfo] = useState(''); // 클릭된 섹션 정보를 저장할 상태
   const options = {
     plugins: {
       legend: {
-        position: 'bottom', // 범례 위치를 하단으로 설정  
+        position: 'bottom', // 범례 위치를 하단으로 설정
         labels: {
           color: 'white',
           font: {
@@ -74,12 +89,14 @@ export function PieChart({selectedGenre, responseData, setSelectedGenre}) { // o
       {/* <GuideText>추천받고 싶은 장르를 차트에서 클릭해주세요</GuideText> */}
       <Pie data={data} options={options} />
       {selectedInfo && (
-        <div style={{ 
-          color: 'white', 
-          fontSize: '18px', // 폰트 크기 조정
-          textAlign: 'center', // 텍스트 중앙 정렬
-          fontFamily: 'Noto Sans KR, sans-serif',
-        }}>
+        <div
+          style={{
+            color: 'white',
+            fontSize: '18px', // 폰트 크기 조정
+            textAlign: 'center', // 텍스트 중앙 정렬
+            fontFamily: 'Noto Sans KR, sans-serif',
+          }}
+        >
           {selectedInfo}
         </div>
       )}

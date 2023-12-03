@@ -13,7 +13,7 @@ const ScrollContainer = styled.div`
   width: 80%;
 
   &::-webkit-scrollbar {
-    height: 12px; // 스크롤바 높이 조정
+    height: 15px; // 스크롤바 높이 조정
     background-color: #2C3440;
   }
 
@@ -49,7 +49,8 @@ const TitleButton = styled.button`
   white-space: nowrap;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
-
+  overflow: hidden;
+  text-overflow: ellipsis;
   &:hover {
     background-color: #1C1E2C;
     transform: translateY(-2px); // Slight lift on hover
