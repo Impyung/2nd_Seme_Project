@@ -91,25 +91,23 @@ export const Logo = styled.div`
 `;
 
 export const TextBox = styled.div`
-  position: relative;
-  height: 559px;
   left: 15vw;
   top: 10vh;
-  font-size: 24px;
   font-family: 'Noto Sans KR', sans-serif;
-  font-weight: bold;
-  line-height: 50px;
 `;
 
 export const MapBox = styled.div`
+  position: relative;
+  left: 7vw;
   margin-top: 17vh;
   height: 75vh;
   text-align: center;
 `;
 
 export const MovieBox = styled.div`
-  margin-top: 17vh;
-  height: 75vh;
+  position: relative;
+  margin-top: 30vh;
+  margin-left: 10vw;
   width: 600px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -137,15 +135,14 @@ export const MovieBox = styled.div`
 `;
 
 export const StyledButton = styled.button`
-  width: 250px;
-  height: 90px;
-  padding: 10px 20px;
-  margin: 20px;
+  width: 160px;
+  height: 50px;
+  margin-left: 10px;
+  margin-bottom: 5px;
   border: none;
   background: #1C1E2C; /* Light background for the button */
   color: white; /* Dark text color for the button */
   font-weight: bold;
-  font-size: 30px;
   border-radius: 10px; /* Rounded corners for the button */
   border: 1px solid #F4F3F3;
   cursor: pointer;

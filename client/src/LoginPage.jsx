@@ -58,12 +58,13 @@ function LoginPage() {
 
       const userId = decoded.userId;
 
-      console.log('로그인 성공:', res.data, '토큰:', token, 'decoded:', userId);
+      // console.log('로그인 성공:', res.data, '토큰:', token);
+
+      console.log(userId)
 
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
 
-      console.log(userId);
 
       navigate('/');
       axios

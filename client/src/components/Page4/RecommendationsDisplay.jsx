@@ -47,8 +47,8 @@ function RecommendationsDisplay({ recommendations, onMovieSelect }) {
 
   // Style for the movie posters
   const posterStyle = {
-    width: '200px', // Correct the typo "130x" to "130px"
-    height:'300px',
+    width: '150px', // Correct the typo "130x" to "130px"
+    height:'225px',
     objectFit: 'cover',
     borderRadius: '5px',
   };
@@ -60,7 +60,7 @@ function RecommendationsDisplay({ recommendations, onMovieSelect }) {
           {movie.poster_path && (
             <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} style={posterStyle} />
           )}
-          <button onClick={() => onMovieSelect(movie.title)} style={{ marginTop: '5px', fontSize: '1rem', width:'200px', height:'40px', whiteSpace:"nowrap", padding:'5px'}}>
+          <button onClick={() => onMovieSelect(movie.title)} style={{ marginTop: '5px', fontSize: '0.7rem', width:'150px', height:'30px', whiteSpace:"nowrap", padding:'5px'}}>
             {movie.title}
           </button>
         </div>

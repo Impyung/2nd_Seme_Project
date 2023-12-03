@@ -32,6 +32,7 @@ import Member from './components/Share/Member';
 import { jwtDecode } from 'jwt-decode';
 import Footer from './components/Share/Footer';
 import { Link } from 'react-router-dom';
+import RecommendationsDisplay from './components/Page4/RecommendationsDisplay';
 
 export const Page4Context = createContext();
 
@@ -56,6 +57,9 @@ function Page4() {
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState('');
   const [selection, setSelection] = useState('');
+  const [recommendations, setRecommendations] = useState([]);
+  const [movieDetails, setMovieDetails] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
 
   // 드롭다운 선택
@@ -119,6 +123,66 @@ function Page4() {
 
   const [selectedDate, setSelectedDate] = useState(null);
 
+  const fetchMovieDetails = async (title) => {
+    const KEY = '0d38cc635c10e090910f3d7ea7194e05';
+    const URL = 'https://api.themoviedb.org/3';
+
+    try {
+      const response = await fetch(
+        `${URL}/search/movie?api_key=${KEY}&language=ko-KR&page=1&query=${encodeURIComponent(
+          title
+        )}`
+      );
+      const data = await response.json();
+      const movie = data.results[0];
+      return movie
+        ? {
+            title,
+            posterUrl: movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : null,
+            vote_average: movie.vote_average,
+            synopsis: movie.overview,
+            // ... other details you want to include ...
+          }
+        : { title, posterUrl: null, vote_average: null };
+    } catch (error) {
+      console.error('Error fetching movie details:', error);
+      return { title, posterUrl: null, vote_average: null };
+    }
+  };
+
+  const getRecommendations = (title) => {
+    axios
+      .get(`http://127.0.0.1:5000/movies?title=${encodeURIComponent(title)}`)
+      .then(async (response) => {
+        const recommendedTitles = response.data.recommendations;
+        const detailedRecommendations = await Promise.all(
+          recommendedTitles.map(async (title) => {
+            const movieResponse = await fetch(
+              `https://api.themoviedb.org/3/search/movie?api_key=0d38cc635c10e090910f3d7ea7194e05&language=ko-KR&query=${encodeURIComponent(
+                title
+              )}`
+            );
+            const movieData = await movieResponse.json();
+            return movieData.results[0]; // Assuming the first result is the correct movie
+          })
+        );
+        setRecommendations(detailedRecommendations);
+      })
+      .catch((error) => {
+        console.error('There was an error!', error);
+      });
+  };
+
+  const handleMovieSelection = async (title) => {
+    const details = await fetchMovieDetails(title);
+    setMovieDetails(details);
+    setIsModalVisible(true);
+    console.log(details);
+  };
+
+
   useEffect(() => {
     // const data1 = {
     //   title : title,
@@ -173,7 +237,7 @@ function Page4() {
     };
 
     window.addEventListener('scroll', handleScroll);
-
+    getRecommendations(title)
     // Clean up
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -230,27 +294,30 @@ function Page4() {
 
           {mapOpen && (
             <div style={{ height: '100vh', display: 'flex' }}>
-              <MovieBox>
-                <RecommendedMoviesList title={title} />
-              </MovieBox>
-            
               <MapBox>
                 <TextBox>
-                  <span>근처 영화관 검색결과입니다.</span>
-                  <br />
-                  <span>원하시는 버튼을 눌러주세요.</span>
-                  <br />
+                  <h2>근처 영화관 검색결과입니다.</h2>
+                  <h3>원하시는 버튼을 눌러주세요.</h3>
                   <StyledButton onClick={ShowMovieData}>
                     실시간 예매 현황
                   </StyledButton>
-                  <br />
                   <StyledButton onClick={() => window.location.reload()}>
                     위치 새로고침
                   </StyledButton>
-                  <br />
                 </TextBox>
                 <KakaoMap onDataChange={handleDataChange} />
               </MapBox>
+
+              
+              <MovieBox>
+                <h2>'{title}' 관련 추천 영화</h2>
+                <h3>영화를 클릭해 정보를 볼 수 있습니다.</h3>
+                <RecommendationsDisplay
+                  id="RcmdDP"
+                  recommendations={recommendations}
+                  onMovieSelect={handleMovieSelection}
+                />
+              </MovieBox>
             </div>
           )}
         </Body>

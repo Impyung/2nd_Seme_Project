@@ -84,7 +84,7 @@ function RecommendationsDisplay({ recommendations, onMovieSelect }) {
           {movie.poster_path && (
             <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} style={posterStyle} />
           )}
-           <TitleButton onClick={() => onMovieSelect(movie.title)}>
+          <TitleButton onClick={() => onMovieSelect(movie.title)}>
             {movie.title}
           </TitleButton>
         </div>

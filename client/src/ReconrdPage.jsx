@@ -196,7 +196,7 @@ function Page8() {
       .get(`http://127.0.0.1:5000/RcmAllMovie`)
       .then(async (response) => {
         setRecommendations(response.data);
-        console.log(response.data);
+        console.log(recommendations);
       })
       .catch((error) => {
         console.error('There was an error!', error);
