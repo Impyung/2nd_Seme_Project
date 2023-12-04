@@ -33,6 +33,7 @@ import { jwtDecode } from 'jwt-decode';
 import Footer from './components/Share/Footer';
 import { Link } from 'react-router-dom';
 import RecommendationsDisplay from './components/Page4/RecommendationsDisplay';
+import MovieDetailsModal from './components/Page4/MovieDetailsModal';
 
 export const Page4Context = createContext();
 
@@ -182,6 +183,12 @@ function Page4() {
     console.log(details);
   };
 
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    console.log('Modal should be closed now');
+  };
+
+
 
   useEffect(() => {
     // const data1 = {
@@ -317,6 +324,12 @@ function Page4() {
                   recommendations={recommendations}
                   onMovieSelect={handleMovieSelection}
                 />
+                {isModalVisible && (
+                  <MovieDetailsModal
+                    movie={movieDetails}
+                    onClose={handleCloseModal}
+                  />
+                )}
               </MovieBox>
             </div>
           )}
