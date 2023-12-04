@@ -47,6 +47,7 @@ const ImageInfo = styled.div`
 
 const GradeInfo = styled.div`
   position: absolute;
+  font-family: 'Noto Sans KR';
   bottom: -27px;
   left: 0;
   width: 65px;
@@ -59,7 +60,17 @@ const GradeInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #f4f3f3;
+  color: ${(props) => {
+    if (props.rating >= 8.5) {
+      return '#4D96FF';
+    } else if (props.rating >= 7.5) {
+      return '#6BCB77';
+    } else if (props.rating >= 6.5) {
+      return '#FFD93D';
+    } else {
+      return '#FF6B6B';
+    }
+  }};
 `;
 
 const ReservInfo = styled.button`
@@ -260,9 +271,9 @@ function Rcmd({ selectedGenre }) {
                       borderRadius: '10px',
                     }}
                   />
-                  <GradeInfo onClick={() => GradeData(movie)}>
+                  <GradeInfo rating={movie.vote_average}>
                     {movie.vote_average === 0
-                      ? 'X.X'
+                      ? '합산중'
                       : movie.vote_average.toFixed(1)}
                   </GradeInfo>
                   <Link to={`/page4?movieId=${movie.id}`}>
