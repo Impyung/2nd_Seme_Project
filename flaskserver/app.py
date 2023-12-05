@@ -169,7 +169,7 @@ def recommend_all_movies():
         user_data.append({
             "title": data["title"],       # 'title' 열 이름 지정
             "genre_ids": data["genre_ids"],  # 'genre_ids' 열 이름 지정
-            "user_rating": data.get("user_rating", 10)
+            "user_rating": data.get("user_rating", 0)
         })
 
     user_df = pd.DataFrame(user_data)
@@ -206,6 +206,7 @@ def recommend_all_movies():
     print(recommended_movies_info)
     # 딕셔너리 리스트를 JSON 형태로 변환하여 반환
     return jsonify(recommended_titles)
+
 
 # if __name__ == '__main__':
 app.run(debug=True)
