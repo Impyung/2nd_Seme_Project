@@ -73,9 +73,11 @@ function LoginForm() {
       const response = await axios.post('http://localhost:3000/verification', {
         email,
       });
+      alert('인증번호가 전송되었습니다.');
       console.log('인증번호가 전송되었습니다.');
       // 인증번호 전송 후 처리
     } catch (error) {
+      alert('인증번호 전송 오류');
       console.error('인증번호 전송 오류:', error);
       // 오류 처리
     }
@@ -86,11 +88,12 @@ function LoginForm() {
       await axios.post('http://localhost:3000/verificationCheck', {
         verNum: verificationCode,
       });
-
+      alert('인증번호 확인 성공');
       console.log('인증번호 확인 성공');
       setIsVerified(true);
     } catch (error) {
       console.error('인증번호 확인 오류:', error);
+      alert('인증번호 확인 실패');
       setIsVerified(false);
     }
   };

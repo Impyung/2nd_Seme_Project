@@ -61,7 +61,6 @@ function Page4() {
   const [movieDetails, setMovieDetails] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-
   // 드롭다운 선택
   const DropDown = (event) => {
     setSelection(event.target.value);
@@ -100,7 +99,7 @@ function Page4() {
         return theater.theatercode;
       }
     }
-    return null; 
+    return null;
   }
 
   function findLOTTECode(theaters, place) {
@@ -118,7 +117,7 @@ function Page4() {
         return theater.brchNo;
       }
     }
-    return null; 
+    return null;
   }
 
   const [selectedDate, setSelectedDate] = useState(null);
@@ -182,7 +181,6 @@ function Page4() {
     console.log(details);
   };
 
-
   useEffect(() => {
     // const data1 = {
     //   title : title,
@@ -237,15 +235,15 @@ function Page4() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    getRecommendations(title)
+    getRecommendations(title);
     // Clean up
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
   return (
-      <Container>
-        <Header isvisible={isHeaderVisible}>
+    <Container>
+      <Header isvisible={isHeaderVisible}>
         <Logo>
           <Link to="/">
             <img
@@ -259,70 +257,73 @@ function Page4() {
         {token ? <Member /> : <Login />}
       </Header>
 
-        <Body>
-          {dataOpen && (
-            <TheaterContainer>
-              <MovieInfo
-                posterUrl={posterUrl}
-                voteAvg={voteAvg}
-                directorName={directorName}
-                releaseDate={releaseDate}
-                genres={genres}
-              />
-              <Reservation>
-                <Date onDateSelect={setSelectedDate} />
-                <DropDownOption onChange={DropDown}>
-                  <option value="">정렬기준 선택</option>
-                  <option value="time">상영시간순</option>
-                  <option value="price">좌석가격순</option>
-                  <option value="seats">잔여좌석순</option>
-                </DropDownOption>
-                <TheatherGroup id="scroll">
-                  <Page4Context.Provider value={selection}>
+      <Body>
+        {dataOpen && (
+          <TheaterContainer>
+            <MovieInfo
+              posterUrl={posterUrl}
+              voteAvg={voteAvg}
+              directorName={directorName}
+              releaseDate={releaseDate}
+              genres={genres}
+            />
+            <Reservation>
+              <Date onDateSelect={setSelectedDate} />
+              <DropDownOption onChange={DropDown}>
+                <option value="">정렬기준 선택</option>
+                <option value="time">상영시간순</option>
+                <option value="price">좌석가격순</option>
+                <option value="seats">잔여좌석순</option>
+              </DropDownOption>
+              <TheatherGroup id="scroll">
+                <Page4Context.Provider value={selection}>
                   <Theather
                     nData={nData}
                     movieName={title}
                     tData={tData}
                     date={selectedDate}
                   />
-                  </Page4Context.Provider>
-                </TheatherGroup>
-                {/* <Scroll /> */}
-              </Reservation>
-            </TheaterContainer>
-          )}
+                </Page4Context.Provider>
+              </TheatherGroup>
+              {/* <Scroll /> */}
+            </Reservation>
+          </TheaterContainer>
+        )}
 
-          {mapOpen && (
-            <div style={{ height: '100vh', display: 'flex' }}>
-              <MapBox>
-                <TextBox>
-                  <h2>근처 영화관 검색결과입니다.</h2>
-                  <h3>원하시는 버튼을 눌러주세요.</h3>
-                  <StyledButton onClick={ShowMovieData}>
-                    실시간 예매 현황
-                  </StyledButton>
-                  <StyledButton onClick={() => window.location.reload()}>
-                    위치 새로고침
-                  </StyledButton>
-                </TextBox>
-                <KakaoMap onDataChange={handleDataChange} />
-              </MapBox>
+        {mapOpen && (
+          <div style={{ height: '100vh', display: 'flex' }}>
+            <MapBox>
+              <TextBox>
+                <h2>근처 영화관 검색결과입니다.</h2>
+                <h3>원하시는 버튼을 눌러주세요.</h3>
+                <StyledButton onClick={ShowMovieData}>
+                  실시간 예매 현황
+                </StyledButton>
+                <StyledButton onClick={() => window.location.reload()}>
+                  위치 새로고침
+                </StyledButton>
+              </TextBox>
+              <KakaoMap onDataChange={handleDataChange} />
+            </MapBox>
 
-              
-              <MovieBox>
-                <h2>'{title}' 관련 추천 영화</h2>
-                <h3>영화를 클릭해 정보를 볼 수 있습니다.</h3>
+            <MovieBox>
+              <h2>'{title}' 관련 추천 영화</h2>
+              <h3>영화를 클릭해 정보를 볼 수 있습니다.</h3>
+              {recommendations.length > 0 ? (
                 <RecommendationsDisplay
                   id="RcmdDP"
                   recommendations={recommendations}
                   onMovieSelect={handleMovieSelection}
                 />
-              </MovieBox>
-            </div>
-          )}
-        </Body>
-        <Footer/>
-      </Container>
+              ) : (
+                <p>추천 영화가 없습니다</p>
+              )}
+            </MovieBox>
+          </div>
+        )}
+      </Body>
+      <Footer />
+    </Container>
   );
 }
 

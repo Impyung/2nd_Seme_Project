@@ -37,7 +37,7 @@ const LandingPage = () => {
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
 
   useEffect(() => {
-    const endpoint = `${API_URL}movie/upcoming?api_key=${API_KEY}&language=ko-KR&page=2`;
+    const endpoint = `${API_URL}movie/upcoming?api_key=${API_KEY}&language=ko-KR&page=1`;
     fetch(endpoint)
       .then((response) => response.json()) //응답을 json형태로 변경하여 then의 response에 반환
       .then((response) => {
