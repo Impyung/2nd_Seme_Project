@@ -25,6 +25,8 @@ const LoginInfo = styled.div`
 
 const LoginBox = styled.div`
   display: flex;
+  position: relative;
+  right: 2vw;
 `;
 
 
