@@ -193,7 +193,7 @@ function MoreMovies() {
         }}
       >
         <hr />
-        <h2 style={{fontSize:'1.6vw', fontFamily: 'Noto Sans KR, sans-serif',textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'}}>무비 차트</h2>
+        <h2 style={{fontSize:'1.6vw', fontFamily: 'Noto Sans KR, sans-serif',marginBottom: '-6vh',textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'}}>무비 차트</h2>
       </div>
       <MoviesGrid>
         {movieData.map((movie, index) => (

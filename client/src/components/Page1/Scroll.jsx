@@ -44,7 +44,7 @@ function Page1Scroll() {
       {count > 0 && (
         <Page1ScrollButton
           id='scrollLeft'
-          style={{ left: '3vw', top: '155vh' }}
+          style={{ left: '3vw', top: '140vh' }}
           onClick={scrollLeft}
         >
           <FontAwesomeIcon icon={faAngleLeft} color="white" />
@@ -54,7 +54,7 @@ function Page1Scroll() {
       {count < 4 && (
         <Page1ScrollButton
           id='scrollRight'
-          style={{ right: '3vw', top: '155vh'  }}
+          style={{ right: '3vw', top: '140vh'  }}
           onClick={scrollRight}
         >
           <FontAwesomeIcon icon={faAngleRight} color="white" />

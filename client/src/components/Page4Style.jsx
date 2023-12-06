@@ -5,21 +5,20 @@ export const Container = styled.div`
   height: 100vh; // 높이를 화면의 100%로 설정
 `;
 export const Body = styled.div`
-  position: relative;
-  display: flex;
   color: #f4f3f3;
   background: linear-gradient(0deg, #2A2F42 30%, #1C1E2C 70%); // Adjust the gradient direction and color stops
   overflow-y: visible;
   overflow-x: hidden;
-  height: auto;
+  height: 100vh;
+  top:11vh;
 `;
 
 export const Reservation = styled.div`
   position: relative;
   width: 777px;
   height: 589px;
-  left: 520px;
-  top: 30px;
+  top: 17vh;
+  left: 100px;
   background: #2A2F42;
   border: 1px solid #F4F3F3;
   border-radius: 10px;
@@ -100,9 +99,14 @@ export const TextBox = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
 `;
 
+
+export const MapContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export const MapBox = styled.div`
   position: relative;
-  left: 7vw;
   margin-top: 17vh;
   height: 75vh;
   text-align: center;
@@ -162,16 +166,7 @@ export const StyledButton = styled.button`
   }
 `;
 
-export const MapContainer = styled.div`
-  position: relative;
-  top:11vh;
-  display: flex;
-  height: 100vh;
-`;
-
-export const TheaterContainer = styled.div`
-position: relative;
-top:11vh;
-height: 100vh;
-font-family: 'Noto Sans KR', sans-serif; 
+export const TheaterContainer = styled.div` 
+display: flex;
+justify-content: center;
 `;

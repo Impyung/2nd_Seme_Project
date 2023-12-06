@@ -267,69 +267,69 @@ function Page4() {
 
       <Body>
         {dataOpen && (
-          <TheaterContainer>
-            <MovieInfo
-              posterUrl={posterUrl}
-              voteAvg={voteAvg}
-              directorName={directorName}
-              releaseDate={releaseDate}
-              genres={genres}
-            />
-            <Reservation>
-              <Date onDateSelect={setSelectedDate} />
-              <DropDownOption onChange={DropDown}>
-                <option value="">정렬기준 선택</option>
-                <option value="time">상영시간순</option>
-                <option value="price">좌석가격순</option>
-                <option value="seats">잔여좌석순</option>
-              </DropDownOption>
-              <TheatherGroup id="scroll">
-                <Page4Context.Provider value={selection}>
-                  <Theather
-                    nData={nData}
-                    movieName={title}
-                    tData={tData}
-                    date={selectedDate}
-                  />
-                </Page4Context.Provider>
-              </TheatherGroup>
-              {/* <Scroll /> */}
-            </Reservation>
-          </TheaterContainer>
+              <TheaterContainer>
+                <MovieInfo
+                  posterUrl={posterUrl}
+                  voteAvg={voteAvg}
+                  directorName={directorName}
+                  releaseDate={releaseDate}
+                  genres={genres}
+                />
+                <Reservation>
+                  <Date onDateSelect={setSelectedDate} />
+                  <DropDownOption onChange={DropDown}>
+                    <option value="">정렬기준 선택</option>
+                    <option value="time">상영시간순</option>
+                    <option value="price">좌석가격순</option>
+                    <option value="seats">잔여좌석순</option>
+                  </DropDownOption>
+                  <TheatherGroup id="scroll">
+                    <Page4Context.Provider value={selection}>
+                      <Theather
+                        nData={nData}
+                        movieName={title}
+                        tData={tData}
+                        date={selectedDate}
+                      />
+                    </Page4Context.Provider>
+                  </TheatherGroup>
+                  {/* <Scroll /> */}
+                </Reservation>
+              </TheaterContainer>
         )}
 
         {mapOpen && (
-          <div style={{ height: '100vh', display: 'flex' }}>
-            <MapBox>
-              <TextBox>
-                <h2>근처 영화관 검색결과입니다.</h2>
-                <h3>원하시는 버튼을 눌러주세요.</h3>
-                <StyledButton onClick={ShowMovieData}>
-                  실시간 예매 현황
-                </StyledButton>
-                <StyledButton onClick={() => window.location.reload()}>
-                  위치 새로고침
-                </StyledButton>
-              </TextBox>
-              <KakaoMap onDataChange={handleDataChange} />
-            </MapBox>
+            <MapContainer>
+              <MapBox>
+                <TextBox>
+                  <h2>근처 영화관 검색결과입니다.</h2>
+                  <h3>원하시는 버튼을 눌러주세요.</h3>
+                  <StyledButton onClick={ShowMovieData}>
+                    실시간 예매 현황
+                  </StyledButton>
+                  <StyledButton onClick={() => window.location.reload()}>
+                    위치 새로고침
+                  </StyledButton>
+                </TextBox>
+                <KakaoMap onDataChange={handleDataChange} />
+              </MapBox>
 
-            <MovieBox>
-              <h2>'{title}' 관련 추천 영화</h2>
-              <h3>영화를 클릭해 정보를 볼 수 있습니다.</h3>
-                <RecommendationsDisplay
-                  id="RcmdDP"
-                  recommendations={recommendations}
-                  onMovieSelect={handleMovieSelection}
-                />
-                {isModalVisible && (
-                  <MovieDetailsModal
-                    movie={movieDetails}
-                    onClose={handleCloseModal}
+              <MovieBox>
+                <h2>'{title}' 관련 추천 영화</h2>
+                <h3>영화를 클릭해 정보를 볼 수 있습니다.</h3>
+                  <RecommendationsDisplay
+                    id="RcmdDP"
+                    recommendations={recommendations}
+                    onMovieSelect={handleMovieSelection}
                   />
-                )}
-              </MovieBox>
-            </div>
+                  {isModalVisible && (
+                    <MovieDetailsModal
+                      movie={movieDetails}
+                      onClose={handleCloseModal}
+                    />
+                  )}
+                </MovieBox>
+            </MapContainer>
           )}
         </Body>
         <Footer/>
