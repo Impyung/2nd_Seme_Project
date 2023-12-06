@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 const MemberBox = styled.div`
   display: flex;
+  position: relative;
+  right: 2vw;
 `;
 
 const LoginInfo = styled.div`
@@ -12,7 +14,7 @@ const LoginInfo = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1.8vh;
   line-height: 19px;
   display: flex;
   align-items: center;
@@ -32,7 +34,7 @@ height: 5vh;
 font-family: 'Noto Sans KR', sans-serif;
 font-style: normal;
 font-weight: 600;
-font-size: 17px;
+font-size: 1.8vh;
 line-height: 19px;
 display: flex;
 align-items: center;
@@ -47,7 +49,7 @@ height: 5vh;
 font-family: 'Noto Sans KR', sans-serif;
 font-style: normal;
 font-weight: 600;
-font-size: 17px;
+font-size: 1.8vh;
 line-height: 19px;
 display: flex;
 align-items: center;
