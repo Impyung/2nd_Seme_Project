@@ -114,8 +114,8 @@ export const MapBox = styled.div`
 
 export const MovieBox = styled.div`
   position: relative;
-  margin-top: 30vh;
-  margin-left: 10vw;
+  margin-top: 25vh;
+  left: 100px;
   width: 600px;
   overflow-y: auto;
   overflow-x: hidden;
