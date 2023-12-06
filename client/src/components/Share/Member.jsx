@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 const MemberBox = styled.div`
   display: flex;
+  position: relative;
+  right: 3vw;
 `;
 
 const LoginInfo = styled.div`

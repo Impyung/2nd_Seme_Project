@@ -32,7 +32,7 @@ export const ImageGroup = styled.div`
 
 export const Header = styled.div`
 position: fixed;
-justify-content: space-around;
+justify-content: space-between;
 display: flex;
 width: 100%;
 min-width: 500px;
@@ -46,6 +46,7 @@ background: ${({ isvisible }) => (isvisible ? 'rgba(28, 30, 44, 0)' : 'rgba(28, 
 
 export const Logo = styled.div`
   position: relative;
+  left: 5vw;
   top: 1vh;
   width: 13.5vh; // Start with a base size
   height: 9.5vh; // Maintain aspect ratio
