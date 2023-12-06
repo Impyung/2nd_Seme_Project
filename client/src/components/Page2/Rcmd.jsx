@@ -41,14 +41,13 @@ const ImageInfo = styled.div`
   height: 285px;
   background: #d9d9d9;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
   color: black;
 `;
 
 const GradeInfo = styled.div`
   position: absolute;
   font-family: 'Noto Sans KR';
-  bottom: -27px;
+  bottom: -37px;
   left: 0;
   width: 65px;
   height: 27px;
@@ -75,7 +74,7 @@ const GradeInfo = styled.div`
 
 const ReservInfo = styled.button`
   position: absolute;
-  bottom: -27px;
+  bottom: -37px;
   right: 0;
   width: 119px;
   height: 27px;

@@ -33,6 +33,7 @@ import { jwtDecode } from 'jwt-decode';
 import Footer from './components/Share/Footer';
 import { Link } from 'react-router-dom';
 import RecommendationsDisplay from './components/Page4/RecommendationsDisplay';
+import MovieDetailsModal from './components/Page4/MovieDetailsModal';
 
 export const Page4Context = createContext();
 
@@ -181,6 +182,13 @@ function Page4() {
     console.log(details);
   };
 
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    console.log('Modal should be closed now');
+  };
+
+
+
   useEffect(() => {
     // const data1 = {
     //   title : title,
@@ -309,21 +317,23 @@ function Page4() {
             <MovieBox>
               <h2>'{title}' 관련 추천 영화</h2>
               <h3>영화를 클릭해 정보를 볼 수 있습니다.</h3>
-              {recommendations.length > 0 ? (
                 <RecommendationsDisplay
                   id="RcmdDP"
                   recommendations={recommendations}
                   onMovieSelect={handleMovieSelection}
                 />
-              ) : (
-                <p>추천 영화가 없습니다</p>
-              )}
-            </MovieBox>
-          </div>
-        )}
-      </Body>
-      <Footer />
-    </Container>
+                {isModalVisible && (
+                  <MovieDetailsModal
+                    movie={movieDetails}
+                    onClose={handleCloseModal}
+                  />
+                )}
+              </MovieBox>
+            </div>
+          )}
+        </Body>
+        <Footer/>
+      </Container>
   );
 }
 

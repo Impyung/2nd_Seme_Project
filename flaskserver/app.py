@@ -144,80 +144,68 @@ def recommend_all_movies():
     movies_df['genre_ids'] = movies_df['genre_ids'].apply(lambda x: ', '.join(map(str, x)))
     movies_db = movies_df[['title', 'genre_ids', 'vote_average']]
 
-    # 사용자 시청 기록
-    user_df = pd.DataFrame({
-        'title': ['트롤 밴드 투게더', '슈퍼 마리오 브라더스', '엘리멘탈','레오'],
-        'genre_ids': ['16, 10751, 10402, 14, 35', '16,10751,12,14,35', '16,35,10751,14,10749','16,35,10751'],
-        'vote_average': [7.200, 7.746, 7.7,7.803],
-        'user_rating': [8.6, 8, 9, 7]
-    })
+    global username
 
-    # 장르별 사용자 평점을 저장할 딕셔너리 초기화
-    genre_ratings = {}
+    url = "mongodb+srv://Pyung:qTIXQTenPZUaxkwq@cluster0.zf3jrtq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
-    # 각 영화에 대해 반복
-    for index, row in user_df.iterrows():
-        # 영화의 장르 리스트
-        genres = row['genre_ids'].split(',')
-        # 각 장르에 대해 사용자 평점 추가
-        for genre in genres:
-            genre = genre.strip()  # 공백 제거
-            if genre in genre_ratings:
-                genre_ratings[genre].append(row['user_rating'])
-            else:
-                genre_ratings[genre] = [row['user_rating']]
+    client = MongoClient(url)
 
-    # 최소 평가 횟수 설정
-    min_reviews = 2
+    db = client['forum']
 
-    # 장르별 가중 평균 점수 계산 (최소 평가 횟수 이상인 경우에만)
-    genre_avg_ratings = {genre: sum(ratings) / len(ratings) for genre, ratings in genre_ratings.items() if len(ratings) >= min_reviews}
+    collection = db['record']
 
-    # 상위 3개 장르 찾기 (가중 평균 점수가 계산된 장르 중에서)
-    top_genres = sorted(genre_avg_ratings, key=genre_avg_ratings.get, reverse=True)[:4]
+    # Fetching all documents in the collection
+    documents = collection.find({'username': f'{username}'})
 
+    documents_list = []
 
-    # 함수 정의: 주어진 장르 리스트가 영화의 장르에 모두 포함되는지 확인
-    def contains_all_genres(movie_genres, genres_to_check):
-        return all(genre in movie_genres for genre in genres_to_check)
+    # Printing the documents
+    for d in documents:
+        documents_list.append(d)
 
-    # 추천 영화 목록
-    recommendations = {
-        "1st_priority": [],
-        "2nd_priority": []
-    }
+    user_data = []
 
-    # 전체 영화 데이터에서 장르별로 추천
-    for index, row in movies_df.iterrows():
-        movie_genres = row['genre_ids'].split(', ')
+    for data in documents_list:
+        user_data.append({
+            "title": data["title"],       # 'title' 열 이름 지정
+            "genre_ids": data["genre_ids"],  # 'genre_ids' 열 이름 지정
+            "user_rating": data.get("user_rating", 0)
+        })
 
-        # 1순위 추천: 상위 4개 장르 모두 포함
-        if contains_all_genres(movie_genres, top_genres):
-            recommendations["1st_priority"].append(row['title'])
+    user_df = pd.DataFrame(user_data)
 
-        # 2순위 추천: 상위 3개 장르 모두 포함
-        elif contains_all_genres(movie_genres, top_genres[:3]):
-            recommendations["2nd_priority"].append(row['title'])
+    # 영화 DB와 사용자 시청 기록을 결합합니다.
+    combined_df = user_df.merge(movies_db, on='title', how='left')
 
-    # 결과 출력
-    all_recommendations = (recommendations["1st_priority"] + recommendations["2nd_priority"])
+    # TF-IDF 벡터화를 사용하여 장르를 수치화합니다.
+    tfidf = TfidfVectorizer(stop_words='english')
+    tfidf_matrix = tfidf.fit_transform(movies_db['genre_ids'])
 
-    # 중복 제거
-    unique_recommendations = list(set(all_recommendations))
+    # 사용자가 시청한 영화에 대한 벡터를 추출합니다.
+    user_movies_indices = [movies_db.index[movies_db['title'] == title].tolist()[0] for title in user_df['title']]
+    user_movies_tfidf = tfidf_matrix[user_movies_indices]
 
-    # 평점에 따라 영화 정렬
-    sorted_movies = movies_df[movies_df['title'].isin(unique_recommendations)].sort_values(by='vote_average', ascending=False)
+    # 사용자 평점을 가중치로 적용합니다.
+    user_ratings = user_df['user_rating'].values
+    user_profile = user_movies_tfidf.multiply(user_ratings[:, None]).mean(axis=0)
 
-    # 상위 10개 영화 선택
-    top_10_movies = sorted_movies.head(10)
+    # user_profile을 numpy 배열로 변환합니다.
+    user_profile_array = np.array(user_profile).reshape(1, -1)
 
+    # 변환된 배열을 사용하여 코사인 유사도를 계산합니다.
+    cosine_sim = cosine_similarity(user_profile_array, tfidf_matrix)
 
+    # 사용자의 선호도와 가장 유사한 영화를 찾습니다.
+    recommendation_indices = cosine_sim.argsort().flatten()[-5:-1]
 
-    recommended_titles = top_10_movies.to_dict('records')
+    recommended_movies_info = movies_df.iloc[recommendation_indices]
 
+    recommended_titles = recommended_movies_info.to_dict('records')
+
+    # 추천영화 출력
+    print(recommended_movies_info)
     # 딕셔너리 리스트를 JSON 형태로 변환하여 반환
     return jsonify(recommended_titles)
-    
 
 
 # if __name__ == '__main__':

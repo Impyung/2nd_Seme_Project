@@ -80,7 +80,7 @@ function Page6() {
   }, []);
   const GridContainer = styled.div`
   display: flex; /* Flexbox 사용 */
-  justify-content: space-between;
+  justify-content: space-around;
 `;
   const fadeInAnimation = `
   @keyframes fadeIn {
@@ -128,11 +128,9 @@ const onSelectMovie = (movie) => {
         <ResultContainer id="page6scroll">
           {loading ? (
             <GridContainer>
-            <Grid color="#2f5792" height={350} width={200} />
-            <Grid color="#2f5792" height={350} width={200} />
-            <Grid color="#2f5792" height={350} width={200} />
-            <Grid color="#2f5792" height={350} width={200} />
-            <Grid color="#2f5792" height={350} width={200} />
+            <Grid color="#2f5792" height={300} width={200} />
+            <Grid color="#2f5792" height={300} width={200} />
+            <Grid color="#2f5792" height={300} width={200} />
           </GridContainer>
           ) : movies.length === 0 ? (
             <NoResultsContainer>
