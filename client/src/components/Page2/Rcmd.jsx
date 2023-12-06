@@ -275,11 +275,14 @@ function Rcmd({ selectedGenre }) {
                       ? '합산중'
                       : movie.vote_average.toFixed(1)}
                   </GradeInfo>
-                  <Link to={`/page4?movieId=${movie.id}`}>
-                    <ReservInfo onClick={() => ReservData(movie)}>
-                      예매
-                    </ReservInfo>
-                  </Link>
+                  <Link
+              key={index}
+              to={`/page4?voteAvg=${movie.vote_average}&posterUrl=${movie.posterUrl}&directorName=${movie.director}&releaseDate=${movie.release_date}&genres=${movie.genres}&title=${movie.title}`}
+            >
+              <ReservInfo onClick={() => ReservData(movie.title)}>
+                예매
+              </ReservInfo>
+            </Link>
                 </ImageInfo>
               </div>
             ))}
