@@ -20,8 +20,7 @@ const MoviesGrid = styled.div`
 const MovieContainer = styled.div`
   position: relative; // 이제 MovieContainer는 position context를 제공합니다.
   width: 194px;
-  height: 295px; // GradeInfo와 ReservInfo를 포함할 공간을 확보해야 합니다.
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: 294px; // GradeInfo와 ReservInfo를 포함할 공간을 확보해야 합니다.
   border-radius: 10px;
   display: flex;
   flex-direction: column;
