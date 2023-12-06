@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+
+const MemberBox = styled.div`
+  display: flex;
+`;
+
 const LoginInfo = styled.div`
-  position: fixed;
-  width: 79px;
-  height: 3px;
+  margin: 15px;
+  height: 5vh;
   font-family: 'Noto Sans KR', sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -23,9 +27,7 @@ const LoginInfo = styled.div`
     cursor: pointer;
   }
 `;const LoginInfo1 = styled.div`
-position: fixed;
-width: 79px;
-height: 5px;
+height: 5vh;
 font-family: 'Noto Sans KR', sans-serif;
 font-style: normal;
 font-weight: 600;
@@ -36,7 +38,7 @@ align-items: center;
 justify-content: center;
 color: #f4f3f3;
 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.99); /* 그림자 효과 추가 */
-
+margin: 15px;
 `;
 const StyledButton = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
@@ -66,19 +68,21 @@ function Member() {
 
   return (
     <>
-      <LoginInfo1 style={{ left: '75vw', top: '2vh' }}>
-        {localStorage.username} 님 
-      </LoginInfo1>
+      <MemberBox>
+        <LoginInfo1>
+          {localStorage.username} 님 
+        </LoginInfo1>
 
-      <Link to="/record">
-        <LoginInfo style={{ left: '80vw', top: '2vh' }}>내 정보</LoginInfo>
-      </Link>
+        <Link to="/record">
+          <LoginInfo>내 정보</LoginInfo>
+        </Link>
 
-      <Link to="/">
-        <LoginInfo style={{ left: '85vw', top: '2vh', width: '7vw' }}>
-          <StyledButton onClick={signOut}>로그아웃</StyledButton>
-        </LoginInfo>
-      </Link>
+        <Link to="/">
+          <LoginInfo>
+            <StyledButton onClick={signOut}>로그아웃</StyledButton>
+          </LoginInfo>
+        </Link>
+      </MemberBox>
     </>
   );
 }

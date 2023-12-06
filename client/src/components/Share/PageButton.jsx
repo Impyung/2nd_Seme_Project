@@ -8,7 +8,7 @@ const PageButtonBox = styled.div`
 
 const PageButtonInfo = styled.div`
   position: relative;
-  top:6vh;
+  top:5.5vh;
   width: 11.25rem; // Assuming 1rem = 16px, equivalent to 180px
   height: 1.56rem; // Assuming 1rem = 16px, equivalent to 25px
   font-family: 'Noto Sans KR', sans-serif;
