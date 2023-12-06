@@ -67,6 +67,7 @@ function Page1() {
       <Body>
         <LandingPage />
         <Search />
+        <br/>
         <ImageGroup id="scroll">
           <BoxOffice />
         </ImageGroup>

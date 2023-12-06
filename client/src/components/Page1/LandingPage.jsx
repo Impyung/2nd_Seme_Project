@@ -78,14 +78,13 @@ const LandingPage = () => {
           </CustomButton>
         </>
       )}
-      <div style={{ width: '80vw', margin: '2rem auto', marginBottom: '-6vh' }}>
+      <div style={{ width: '80vw', margin: '2rem auto', marginBottom: '-14vh' }}>
         <hr />
         <h2
           style={{ fontSize: '1.6vw', fontFamily: 'Noto Sans KR, sans-serif',  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',  }}
         >
           박스 오피스
         </h2>
-        {/*Movie Grid Cards */}
       </div>
     </div>
   );
