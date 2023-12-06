@@ -26,7 +26,8 @@ const LoginInfo = styled.div`
     transition: 0.5s;
     cursor: pointer;
   }
-`;const LoginInfo1 = styled.div`
+`;
+const LoginInfo1 = styled.div`
 height: 5vh;
 font-family: 'Noto Sans KR', sans-serif;
 font-style: normal;
@@ -38,7 +39,22 @@ align-items: center;
 justify-content: center;
 color: #f4f3f3;
 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.99); /* 그림자 효과 추가 */
-margin: 15px;
+  margin: 15px;
+`;
+
+const LoginInfo2 = styled.div`
+height: 5vh;
+font-family: 'Noto Sans KR', sans-serif;
+font-style: normal;
+font-weight: 600;
+font-size: 17px;
+line-height: 19px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #f4f3f3;
+text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.99); /* 그림자 효과 추가 */
+  margin: 15px 0px;
 `;
 const StyledButton = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
@@ -78,9 +94,9 @@ function Member() {
         </Link>
 
         <Link to="/">
-          <LoginInfo>
+          <LoginInfo2>
             <StyledButton onClick={signOut}>로그아웃</StyledButton>
-          </LoginInfo>
+          </LoginInfo2>
         </Link>
       </MemberBox>
     </>
