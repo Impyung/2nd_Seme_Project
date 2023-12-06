@@ -153,16 +153,9 @@ function Page5() {
       <Body>
         <Search />
         <TopSection>
-          <Text1>본인의 취향에 맞는 영화를 3개 골라주세요!</Text1>
-          <div
-            style={{
-              position: 'relative',
-              top: '25.5vh',
-              right: '33vw',
-            }}
-          >
-            <StyledRefreshIcon onClick={handleNextPage} />
-          </div>
+          <Text1>본인의 취향에 맞는 영화를 3개 골라주세요!
+          <StyledRefreshIcon style={{display:'relative', marginLeft:'20px'}} onClick={handleNextPage} />
+          </Text1>
         </TopSection>
         <ScrollContent id="scroll" ref={scrollableContentRef}>
           {movies.map((movie) => (

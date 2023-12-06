@@ -104,11 +104,12 @@ export const ScrollContent = styled.div`
 `;
 
 export const TopSection = styled.div`
+  position: relative;
+  top: 25vh;
   display: flex;
   margin-bottom: 20vh;
-  position: relative;
   align-items: center; // 세로 중앙 정렬
-  padding: 0 20px; // 필요한 경우 양쪽 패딩을 조정
+  justify-content: center;
 `;
 
 // export const RefreshIcon = styled.img`
@@ -120,11 +121,9 @@ export const TopSection = styled.div`
 export const Text1 = styled.div`
 position: relative;
 margin-bottom: 5vh;
-margin: 0 auto;
-top: 25vh;
-width: 460px;
+width: 485px;
 display: flex;
-padding: 1vh 2vw;
+padding: 1vh 1vw;
 height: 50px;
 font-family: 'Noto Sans KR';
 font-style: normal;
@@ -132,12 +131,10 @@ font-weight: 400;
 font-size: 24px;
 line-height: 35px;
 color: #f4f3f3;
-text-align: center;
 align-items: center;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 border-radius: 10px;
 border: 1px solid #535D7E;
-
 `;
 
 export const Text2 = styled.div`
