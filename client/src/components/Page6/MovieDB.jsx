@@ -2,9 +2,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 const ImageInfo = styled.div`
+    margin-top: 35px;
+    margin-left: 35px;
     border-radius: 10px;
     display: flex;
-    height: 450px;
+    height: 400px;
 `;
 
 const ImageContainer = styled.div`
@@ -13,6 +15,7 @@ const ImageContainer = styled.div`
 
 const OverviewContainer = styled.div`
   width: 300px;
+  height: 320px;
   text-align: left;
   margin-left: 20px;
   margin-right: 30px;
@@ -56,7 +59,7 @@ function Movie({onSelectMovie, poster_path, title, overview, genre_ids}) {
         <MovieButton onClick={() => onSelectMovie({ poster_path, title, overview })}>
         <ImageInfo>
             <ImageContainer>
-                <img style={{borderRadius:'10px', width:'250px'}} src={"https://image.tmdb.org/t/p/w300" + poster_path} alt={title}/>
+                <img style={{borderRadius:'10px', width:'250px', height:'375px'}} src={"https://image.tmdb.org/t/p/w300" + poster_path} alt={title}/>
             </ImageContainer>
             <OverviewContainer>
                 <h2>{title}</h2>

@@ -287,14 +287,16 @@ function Page8() {
     setShowRatingInput(true);
   };
 
-  const submitRating = async () => {
+  const submitRating = () => {
     try {
       const payload = {
         title: selectedMovie.title,
         rating: rating,
       };
 
-      await axios.post('http://localhost:3000/rating', payload, {
+      console.log(payload.title,payload.rating);
+
+      axios.post('http://localhost:3000/rating', payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
