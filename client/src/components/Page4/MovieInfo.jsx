@@ -1,22 +1,21 @@
 import styled from "styled-components";
 
+const ImageBox = styled.div`
+  position: relative;
+  top: 17vh;
+`;
+
 const Image = styled.div`
-  position: absolute;
   width: 300px;
   height: 420px;
-  left: 140px;
-  top: 30px;
   background: #d9d9d9;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 `;
 
 const TextInfo = styled.div`
-    position: absolute;
 width: 298px;
 height: 181px;
-left: 140px;
-top: 450px;
 font-family: 'Inter';
 font-style: normal;
 font-weight: 500;
@@ -39,10 +38,12 @@ function MovieInfo( movie ) {
 
   return (
     <>
+      <ImageBox>
         <Image>
           <PosterImage src={movie.posterUrl}/>
         </Image>
         <TextInfo>감독 : {movie.directorName}<br/>장르 : {movie.genres}<br/>개봉 : {movie.releaseDate}<br/>평점 : {movie.voteAvg} </TextInfo>
+      </ImageBox>
     </>
   );
 }

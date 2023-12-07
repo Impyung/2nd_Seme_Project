@@ -5,22 +5,20 @@ export const Container = styled.div`
   height: 100vh; // 높이를 화면의 100%로 설정
 `;
 export const Body = styled.div`
-  position: relative;
-  display: flex;
   color: #f4f3f3;
   background: linear-gradient(0deg, #2A2F42 30%, #1C1E2C 70%); // Adjust the gradient direction and color stops
   overflow-y: visible;
   overflow-x: hidden;
-  height: auto;
-  font-family: 'Noto Sans KR', sans-serif;
+  height: 100vh;
+  top:11vh;
 `;
 
 export const Reservation = styled.div`
   position: relative;
   width: 777px;
   height: 589px;
-  left: 520px;
-  top: 30px;
+  top: 17vh;
+  left: 100px;
   background: #2A2F42;
   border: 1px solid #F4F3F3;
   border-radius: 10px;
@@ -57,24 +55,28 @@ export const TheatherGroup = styled.div`
 
 export const Header = styled.div`
 position: fixed;
+justify-content: space-between;
+display: flex;
 width: 100%;
 min-width: 500px;
 height: 11vh;
 left: 0px;
 top: 0;
 z-index: 999;
-background: ${({ isvisible }) => (isvisible ? 'rgba(28, 30, 44, 1)' : 'rgba(28, 30, 44, 0.5)')};
+background: ${({ isvisible }) => (isvisible ? 'rgba(28, 30, 44, 0)' : 'rgba(28, 30, 44, 0.99)')};
  transition: background 0.5s ease; /* 배경 전환에 애니메이션 추가 */
 `;
 
 export const Logo = styled.div`
-  position: fixed;
-  width: 7vw; // Start with a base size
-  height: 11vh; // Maintain aspect ratio
-  left: 6vw;
+  position: relative;
+  left: 5vw;
+  top: 1vh;
+  width: 13.5vh; // Start with a base size
+  height: 9.5vh; // Maintain aspect ratio
+  /* left: 6vw; */
   transition: transform 0.5s ease-in-out;
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.1); /* 마우스 호버 시 1.1배 확대 효과 */
     cursor: pointer;
   }
 
@@ -97,9 +99,14 @@ export const TextBox = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
 `;
 
+
+export const MapContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export const MapBox = styled.div`
   position: relative;
-  left: 7vw;
   margin-top: 17vh;
   height: 75vh;
   text-align: center;
@@ -107,8 +114,8 @@ export const MapBox = styled.div`
 
 export const MovieBox = styled.div`
   position: relative;
-  margin-top: 30vh;
-  margin-left: 10vw;
+  margin-top: 25vh;
+  left: 100px;
   width: 600px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -159,16 +166,7 @@ export const StyledButton = styled.button`
   }
 `;
 
-export const MapContainer = styled.div`
-  position: relative;
-  top:11vh;
-  display: flex;
-  height: 100vh;
-`;
-
-export const TheaterContainer = styled.div`
-position: relative;
-top:11vh;
-height: 100vh;
-font-family: 'Noto Sans KR', sans-serif; 
+export const TheaterContainer = styled.div` 
+display: flex;
+justify-content: center;
 `;

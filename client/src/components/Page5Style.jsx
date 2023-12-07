@@ -21,31 +21,42 @@ export const Body = styled.div`
 `;
 
 export const Header = styled.div`
-  position: fixed;
-  width: 100%;
-  min-width: 500px;
-  height: 11vh;
-  top: 0;
-  z-index: 999;
-  background: ${({ isvisible }) => (isvisible ? 'rgba(28, 30, 44, 1)' : 'rgba(28, 30, 44, 0.5)')};
-  transition: background 0.5s ease;
+position: fixed;
+justify-content: space-between;
+display: flex;
+width: 100%;
+min-width: 500px;
+height: 11vh;
+left: 0px;
+top: 0;
+z-index: 999;
+background: ${({ isvisible }) => (isvisible ? 'rgba(28, 30, 44, 0)' : 'rgba(28, 30, 44, 0.99)')};
+ transition: background 0.5s ease; /* 배경 전환에 애니메이션 추가 */
 `;
 
 export const Logo = styled.div`
-  position: fixed;
-  width: 110px;
-  height: 11vh;
-  left: 6vw;
+  position: relative;
+  left: 5vw;
+  top: 1vh;
+  width: 13.5vh; // Start with a base size
+  height: 9.5vh; // Maintain aspect ratio
+  /* left: 6vw; */
   transition: transform 0.5s ease-in-out;
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.1); /* 마우스 호버 시 1.1배 확대 효과 */
     cursor: pointer;
   }
+
+  // Adjustments for smaller screens
   @media (max-width: 768px) {
-    width: 16vw;
+    width: 16vw; // Larger percentage on smaller screens
+    height: 11vh; // Maintain aspect ratio
   }
+
+  // Adjustments for very small screens
   @media (max-width: 480px) {
-    width: 12vw;
+    width: 12vw; // Even larger percentage on very small screens
+    height: 11vh; // Maintain aspect ratio
   }
 `;
 
@@ -93,11 +104,12 @@ export const ScrollContent = styled.div`
 `;
 
 export const TopSection = styled.div`
+  position: relative;
+  top: 25vh;
   display: flex;
   margin-bottom: 20vh;
-  position: relative;
   align-items: center; // 세로 중앙 정렬
-  padding: 0 20px; // 필요한 경우 양쪽 패딩을 조정
+  justify-content: center;
 `;
 
 // export const RefreshIcon = styled.img`
@@ -109,11 +121,9 @@ export const TopSection = styled.div`
 export const Text1 = styled.div`
 position: relative;
 margin-bottom: 5vh;
-margin: 0 auto;
-top: 25vh;
-width: 460px;
+width: 485px;
 display: flex;
-padding: 1vh 2vw;
+padding: 1vh 1vw;
 height: 50px;
 font-family: 'Noto Sans KR';
 font-style: normal;
@@ -121,12 +131,10 @@ font-weight: 400;
 font-size: 24px;
 line-height: 35px;
 color: #f4f3f3;
-text-align: center;
 align-items: center;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 border-radius: 10px;
 border: 1px solid #535D7E;
-
 `;
 
 export const Text2 = styled.div`

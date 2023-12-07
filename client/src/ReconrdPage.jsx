@@ -304,6 +304,7 @@ function Page8() {
 
       // 평점 입력창 숨기기
       setShowRatingInput(false);
+      getRecommendations();
       // 추가적인 상태 업데이트나 UI 반영 로직 (예: 평점 목록 업데이트)
     } catch (error) {
       console.error('평점 제출 중 오류 발생:', error);

@@ -169,10 +169,12 @@ def recommend_all_movies():
         user_data.append({
             "title": data["title"],       # 'title' 열 이름 지정
             "genre_ids": data["genre_ids"],  # 'genre_ids' 열 이름 지정
-            "user_rating": data.get("user_rating", 0)
+            "user_rating": data.get("rating", 0)
         })
 
     user_df = pd.DataFrame(user_data)
+
+    user_df['user_rating'] = user_df['user_rating'].astype(float)
 
     # 영화 DB와 사용자 시청 기록을 결합합니다.
     combined_df = user_df.merge(movies_db, on='title', how='left')
@@ -203,7 +205,7 @@ def recommend_all_movies():
     recommended_titles = recommended_movies_info.to_dict('records')
 
     # 추천영화 출력
-    print(recommended_movies_info)
+    print(documents_list)
     # 딕셔너리 리스트를 JSON 형태로 변환하여 반환
     return jsonify(recommended_titles)
 

@@ -32,6 +32,8 @@ export const ImageGroup = styled.div`
 
 export const Header = styled.div`
 position: fixed;
+justify-content: space-between;
+display: flex;
 width: 100%;
 min-width: 500px;
 height: 11vh;
@@ -43,10 +45,12 @@ background: ${({ isvisible }) => (isvisible ? 'rgba(28, 30, 44, 0)' : 'rgba(28, 
 `;
 
 export const Logo = styled.div`
-  position: fixed;
-  width: 110px; // Start with a base size
-  height: 11vh; // Maintain aspect ratio
-  left: 6vw;
+  position: relative;
+  left: 5vw;
+  top: 1vh;
+  width: 13.5vh; // Start with a base size
+  height: 9.5vh; // Maintain aspect ratio
+  /* left: 6vw; */
   transition: transform 0.5s ease-in-out;
   &:hover {
     transform: scale(1.1); /* 마우스 호버 시 1.1배 확대 효과 */

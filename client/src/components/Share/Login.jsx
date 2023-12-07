@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
 const LoginInfo = styled.div`
-  position: fixed;
+  /* position: fixed; */
   height: 5vh;
   font-family: 'Noto Sans KR', sans-serif;
   font-style: normal;
@@ -13,6 +13,7 @@ const LoginInfo = styled.div`
   align-items: center;
   justify-content: center;
   color: #f4f3f3;
+  margin: 15px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.99); /* 그림자 효과 추가 */
   &:hover {
     color: #f4f3f3;
@@ -20,6 +21,12 @@ const LoginInfo = styled.div`
     text-underline-position: under;
     transition: 0.5s;
   }
+`;
+
+const LoginBox = styled.div`
+  display: flex;
+  position: relative;
+  right: 2vw;
 `;
 
 
@@ -33,8 +40,10 @@ function Login() {
 
     return(
 <>
+      <LoginBox>
         <Link to="/Login"><LoginInfo style={{left:'80vw',top:'1vh'}}>로그인</LoginInfo></Link>
         <Link to="/signup"><LoginInfo style={{left:'85vw',top:'1vh'}}>회원가입</LoginInfo></Link>
+      </LoginBox>
   </>
     )
 }
