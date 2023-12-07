@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 function SelectedMoviesDisplay({ selectedMovies, getRecommendations }) {
   const MovieBox = styled.button`
-  position: relative;
+  /* position: relative; */
   height: 40vh;
-  left: 10vw;
+  /* left: 10vw; */
   display: flex; // Use flexbox
   /* flex-direction: row; // Align items horizontally */
   align-items: center; // Center items vertically
@@ -57,7 +57,8 @@ const MovieText = styled.div`
       style={{
         display: 'flex',
         gap: '20px',
-        overflow:'auto'
+        overflow:'hidden',
+        justifyContent:'center'
       }}
     >
       {selectedMovies.map((movie, index) => (

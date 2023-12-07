@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Header, Logo, Body } from './components/Page5Style';
+import { Container, Header, Logo, Body, GridContainer } from './components/Page5Style';
 import Login from './components/Share/Login';
 import PageButton from './components/Share/PageButton';
 import {
@@ -19,6 +19,7 @@ import Search from './components/Share/Search';
 import ToTop from './components/Page1/ToTop';
 import Member from './components/Share/Member';
 import { jwtDecode } from 'jwt-decode';
+import { Grid } from 'react-loader-spinner';
 
 // import MovieFetcher from './components/Page5/MovieFetcher';
 // import MovieSelector from './components/Page5/MovieSelector';
@@ -27,6 +28,7 @@ function Page5() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -64,6 +66,7 @@ function Page5() {
       .then((data) => {
         const firstNineMovies = data.results.slice(6, 15, 2);
         setMovies(firstNineMovies);
+        setIsLoading(false);
       })
       .catch((error) => console.error(error));
   };
@@ -157,8 +160,17 @@ function Page5() {
           <StyledRefreshIcon style={{display:'relative', marginLeft:'20px'}} onClick={handleNextPage} />
           </Text1>
         </TopSection>
+
+        {isLoading && 
+        <GridContainer>
+                    <Grid color="#2f5792" height={450} width={170} />
+                    <Grid color="#2f5792" height={450} width={170} />
+                    <Grid color="#2f5792" height={450} width={170} />
+                    <Grid color="#2f5792" height={450} width={170} />
+                    <Grid color="#2f5792" height={450} width={170} />
+                  </GridContainer>}
         <ScrollContent id="scroll" ref={scrollableContentRef}>
-          {movies.map((movie) => (
+          {!isLoading&&movies.map((movie) => (
             <div key={movie.id}>
               <div onClick={() => handleBoxClick(movie)}>
                 <img

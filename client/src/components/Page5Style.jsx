@@ -112,6 +112,11 @@ export const TopSection = styled.div`
   justify-content: center;
 `;
 
+export const GridContainer = styled.div`
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-evenly;
+`;
+
 // export const RefreshIcon = styled.img`
 //   cursor: pointer;
 //   width: 80px;

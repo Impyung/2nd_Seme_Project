@@ -136,7 +136,7 @@ def receive_token():
 
 def recommend_all_movies():
     # JSON 파일로부터 데이터를 로드합니다
-    with open('/Users/lsh549516/Desktop/웹프로그래밍/TGI/MT/data/all-movies.json', 'r', encoding='utf-8') as file:
+    with open('./all-movies.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
 
     # DataFrame을 생성합니다
@@ -198,7 +198,7 @@ def recommend_all_movies():
     cosine_sim = cosine_similarity(user_profile_array, tfidf_matrix)
 
     # 사용자의 선호도와 가장 유사한 영화를 찾습니다.
-    recommendation_indices = cosine_sim.argsort().flatten()[-5:-1]
+    recommendation_indices = cosine_sim.argsort().flatten()[-8:]
 
     recommended_movies_info = movies_df.iloc[recommendation_indices]
 

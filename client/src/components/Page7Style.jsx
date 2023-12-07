@@ -19,6 +19,7 @@ export const Body = styled.div`
 
 export const RecommendBox = styled.div`
   position: relative;
+  justify-content: center;
   top: 11vh;
   background: linear-gradient(0deg, #2A2F42 30%, #1C1E2C 70%); 
   font-family: 'Noto Sans KR', sans-serif;
