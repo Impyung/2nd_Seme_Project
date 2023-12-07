@@ -31,7 +31,7 @@ height: 31px;
 left: 621px;
 top: 79px;
 border-radius:5px;
-font-family: 'Inter';
+font-family: 'Noto Sans KR', sans-serif;
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
@@ -39,7 +39,7 @@ line-height: 19px;
 display: flex;
 align-items: center;
 text-align: center;
-background: none;
+background: #2A2F42;
 color: #F4F3F3;
 `;
 
