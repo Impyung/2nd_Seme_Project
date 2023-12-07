@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 
@@ -41,6 +41,7 @@ const SearchInput = styled.input`
 function Search() {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
+
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);

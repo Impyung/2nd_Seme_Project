@@ -36,10 +36,15 @@ const ImageContainer = styled.div`
   }
 `;
 
-const MainImage = ({ image, title, text }) => {
+const MainImage = ({ image, title, text, onImageClick }) => {
   const truncatedText = text.length > 150 ? text.substring(0, 300) + "..." : text;
+
+  const ImageClick = (title) => {
+    onImageClick(title)
+  }
+
   return (
-    <ImageContainer image={image} >
+    <ImageContainer image={image} onClick={()=>ImageClick(title)} >
       <div>
         <h2 style={{fontSize:'1.7vw'}}>{title}</h2>
         <p style={{ fontSize: '1.2vw' }}>{truncatedText}</p>

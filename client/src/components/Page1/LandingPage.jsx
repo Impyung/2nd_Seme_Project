@@ -30,12 +30,19 @@ const CustomButton = styled.button`
 const NextIcon = styled(FaArrowCircleRight)`
 `;
 
-const LandingPage = () => {
+const LandingPage = ({selectedMovie}) => {
   const navigate = useNavigate();
   const [Movies, setMovies] = useState([]); //배열로 값을받기 때문
   const [MainMovieImage, setMainMovieImage] = useState(null);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
+
+  const handleImageClick = (movieTitle) => {
+    navigate('/page6', { state: { searchQuery: movieTitle } });
+    console.log(movieTitle);
+  };
+
+
 
   useEffect(() => {
     const endpoint = `${API_URL}movie/upcoming?api_key=${API_KEY}&language=ko-KR&page=1`;
@@ -78,6 +85,7 @@ const LandingPage = () => {
             image={`${IMAGE_BASE_URL}w1280/${currentMovie.backdrop_path}`}
             title={currentMovie.title}
             text={currentMovie.overview}
+            onImageClick={(title) => handleImageClick(title)}
           />
           <CustomButton onClick={goToNextMovie}>
             <NextIcon size="2em" color="#f3f3f3"

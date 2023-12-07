@@ -28,6 +28,13 @@ function Page6() {
   const location = useLocation();
   const searchQuery = location.state?.searchQuery || '';
 
+  useEffect(() => {
+    if (searchQuery) {
+      // Perform the search using the searchQuery
+    }
+  }, [searchQuery]);
+
+
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [NAME, setNAME] = useState('');

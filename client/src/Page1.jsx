@@ -25,6 +25,7 @@ function Page1() {
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState('');
 
+
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
@@ -65,8 +66,8 @@ function Page1() {
       </Header>
 
       <Body>
-        <LandingPage />
-        <Search />
+        <LandingPage/>
+        <Search/>
         <br/>
         <ImageGroup id="scroll">
           <BoxOffice />
