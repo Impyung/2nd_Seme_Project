@@ -95,8 +95,15 @@ export const Logo = styled.div`
 
 export const TextBox = styled.div`
   left: 15vw;
-  top: 10vh;
+  top: 6vh;
   font-family: 'Noto Sans KR', sans-serif;
+  /* display: flex; */
+`;
+
+export const TextBox2 = styled.div`
+`;
+
+export const ButtonBox = styled.div`
 `;
 
 
@@ -112,10 +119,15 @@ export const MapBox = styled.div`
   text-align: center;
 `;
 
+export const Line = styled.div`
+  width: 2px; /* 또는 필요한 너비 */
+  background-color: #9e9e9e;
+  margin: 25vh 0px 0px 40px;
+`;
+
 export const MovieBox = styled.div`
   position: relative;
   margin-top: 25vh;
-  left: 100px;
   width: 600px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -169,4 +181,9 @@ export const StyledButton = styled.button`
 export const TheaterContainer = styled.div` 
 display: flex;
 justify-content: center;
+`;
+
+export const GridContainer = styled.div`
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-evenly;
 `;

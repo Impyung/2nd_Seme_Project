@@ -13,7 +13,12 @@ import {
   TheaterContainer,
   MovieBox,
   MapBox,
+  ButtonBox,
+  TextBox2,
+  Line,
+  GridContainer,
 } from './components/Page4Style';
+import { Grid } from 'react-loader-spinner';
 import axios from 'axios';
 // import Scroll from './components/Page4/Scroll';
 import RecommendedMoviesList from './components/Page4/RecommendedMoviesList';
@@ -61,6 +66,7 @@ function Page4() {
   const [recommendations, setRecommendations] = useState([]);
   const [movieDetails, setMovieDetails] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 드롭다운 선택
   const DropDown = (event) => {
@@ -169,6 +175,7 @@ function Page4() {
           })
         );
         setRecommendations(detailedRecommendations);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error('There was an error!', error);
@@ -186,8 +193,6 @@ function Page4() {
     setIsModalVisible(false);
     console.log('Modal should be closed now');
   };
-
-
 
   useEffect(() => {
     // const data1 = {
@@ -266,74 +271,88 @@ function Page4() {
       </Header>
 
       <Body>
-        {dataOpen && (
-              <TheaterContainer>
-                <MovieInfo
-                  posterUrl={posterUrl}
-                  voteAvg={voteAvg}
-                  directorName={directorName}
-                  releaseDate={releaseDate}
-                  genres={genres}
-                />
-                <Reservation>
-                  <Date onDateSelect={setSelectedDate} />
-                  <DropDownOption onChange={DropDown}>
-                    <option value="">정렬기준 선택</option>
-                    <option value="time">상영시간순</option>
-                    <option value="price">좌석가격순</option>
-                    <option value="seats">잔여좌석순</option>
-                  </DropDownOption>
-                  <TheatherGroup id="scroll">
-                    <Page4Context.Provider value={selection}>
-                      <Theather
-                        nData={nData}
-                        movieName={title}
-                        tData={tData}
-                        date={selectedDate}
-                      />
-                    </Page4Context.Provider>
-                  </TheatherGroup>
-                  {/* <Scroll /> */}
-                </Reservation>
-              </TheaterContainer>
-        )}
+        <>
+          {dataOpen && (
+            <TheaterContainer>
+              <MovieInfo
+                posterUrl={posterUrl}
+                voteAvg={voteAvg}
+                directorName={directorName}
+                releaseDate={releaseDate}
+                genres={genres}
+              />
+              <Reservation>
+                <Date onDateSelect={setSelectedDate} />
+                <DropDownOption onChange={DropDown}>
+                  <option value="">정렬기준 선택</option>
+                  <option value="time">상영시간순</option>
+                  <option value="price">좌석가격순</option>
+                  <option value="seats">잔여좌석순</option>
+                </DropDownOption>
+                <TheatherGroup id="scroll">
+                  <Page4Context.Provider value={selection}>
+                    <Theather
+                      nData={nData}
+                      movieName={title}
+                      tData={tData}
+                      date={selectedDate}
+                    />
+                  </Page4Context.Provider>
+                </TheatherGroup>
+                {/* <Scroll /> */}
+              </Reservation>
+            </TheaterContainer>
+          )}
 
-        {mapOpen && (
+          {mapOpen && (
             <MapContainer>
               <MapBox>
                 <TextBox>
-                  <h2>근처 영화관 검색결과입니다.</h2>
-                  <h3>원하시는 버튼을 눌러주세요.</h3>
-                  <StyledButton onClick={ShowMovieData}>
-                    실시간 예매 현황
-                  </StyledButton>
-                  <StyledButton onClick={() => window.location.reload()}>
-                    위치 새로고침
-                  </StyledButton>
+                  <TextBox2>
+                    <h2>근처 영화관 검색결과입니다.</h2>
+                    <h3>원하시는 버튼을 눌러주세요.</h3>
+                  </TextBox2>
+                  <ButtonBox>
+                    <StyledButton onClick={ShowMovieData}>
+                      실시간 예매 현황
+                    </StyledButton>
+                    <StyledButton onClick={() => window.location.reload()}>
+                      위치 새로고침
+                    </StyledButton>
+                  </ButtonBox>
                 </TextBox>
                 <KakaoMap onDataChange={handleDataChange} />
               </MapBox>
-
+              <Line />
               <MovieBox>
                 <h2>'{title}' 관련 추천 영화</h2>
                 <h3>영화를 클릭해 정보를 볼 수 있습니다.</h3>
-                  <RecommendationsDisplay
-                    id="RcmdDP"
-                    recommendations={recommendations}
-                    onMovieSelect={handleMovieSelection}
+                {isLoading ?
+                  (<GridContainer>
+                    <Grid color="#2f5792" height={250} width={150} />
+                    <Grid color="#2f5792" height={250} width={150} />
+                    <Grid color="#2f5792" height={250} width={150} />
+                  </GridContainer>)
+                :
+                (<RecommendationsDisplay
+                  id="RcmdDP"
+                  recommendations={recommendations}
+                  onMovieSelect={handleMovieSelection}
+                />)
+                }
+                {isModalVisible && (
+                  <MovieDetailsModal
+                    movie={movieDetails}
+                    onClose={handleCloseModal}
                   />
-                  {isModalVisible && (
-                    <MovieDetailsModal
-                      movie={movieDetails}
-                      onClose={handleCloseModal}
-                    />
-                  )}
-                </MovieBox>
+                )}
+              </MovieBox>
             </MapContainer>
           )}
-        </Body>
-        <Footer/>
-      </Container>
+        </>
+      </Body>
+      <Footer />
+    </Container>
   );
 }
 

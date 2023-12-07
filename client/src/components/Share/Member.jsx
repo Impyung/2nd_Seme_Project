@@ -60,7 +60,6 @@ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.99); /* 그림자 효과 추가 */
 `;
 const StyledButton = styled.button`
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 16px;
   line-height: 19px;
   color: #f4f3f3;
   background-color: transparent;
