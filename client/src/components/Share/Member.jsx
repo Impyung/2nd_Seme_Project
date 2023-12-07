@@ -20,6 +20,7 @@ const LoginInfo = styled.div`
   align-items: center;
   justify-content: center;
   color: #f4f3f3;
+  white-space: nowrap;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.99); /* 그림자 효과 추가 */
   &:hover {
     color: #f4f3f3;
@@ -31,6 +32,7 @@ const LoginInfo = styled.div`
 `;
 const LoginInfo1 = styled.div`
 height: 5vh;
+white-space: nowrap;
 font-family: 'Noto Sans KR', sans-serif;
 font-style: normal;
 font-weight: 600;
@@ -51,6 +53,7 @@ font-style: normal;
 font-weight: 600;
 font-size: 1.8vh;
 line-height: 19px;
+white-space: nowrap;
 display: flex;
 align-items: center;
 justify-content: center;

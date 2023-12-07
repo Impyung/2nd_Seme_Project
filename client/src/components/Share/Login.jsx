@@ -41,8 +41,8 @@ function Login() {
     return(
 <>
       <LoginBox>
-        <Link to="/Login"><LoginInfo style={{left:'80vw',top:'1vh'}}>로그인</LoginInfo></Link>
-        <Link to="/signup"><LoginInfo style={{left:'85vw',top:'1vh'}}>회원가입</LoginInfo></Link>
+        <Link to="/Login"><LoginInfo style={{left:'80vw',top:'1vh',whiteSpace:'nowrap'}}>로그인</LoginInfo></Link>
+        <Link to="/signup"><LoginInfo style={{left:'85vw',top:'1vh',whiteSpace:'nowrap'}}>회원가입</LoginInfo></Link>
       </LoginBox>
   </>
     )
