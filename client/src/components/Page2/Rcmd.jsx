@@ -254,8 +254,7 @@ function Rcmd({ selectedGenre }) {
             ref={scrollRef}
             style={{
               marginTop: calculateScrollContainerPosition(movieDetails.length),
-              justifyContent:
-                movieDetails.length <= 5 ? 'center' : 'flex-start',
+              justifyContent: 'center'
             }}
           >
             {movieDetails.map((movie, index) => (

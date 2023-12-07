@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Header, Logo, Body } from './components/Page2Style';
+import { Container, Header, Logo, Body, RcmdContainer } from './components/Page2Style';
 import { Link } from 'react-router-dom';
 import Rcmd from './components/Page2/Rcmd';
 import PageButton from './components/Share/PageButton';
@@ -59,6 +59,7 @@ function Page2() {
       </Header>
 
       <Body>
+        <RcmdContainer>
         <Search />
         <Chart
           setSelectedGenre={setSelectedGenre}
@@ -66,6 +67,7 @@ function Page2() {
           responseData={responseData}
         />
         <Rcmd selectedGenre={selectedGenre} />
+        </RcmdContainer>
       </Body>
       <Footer />
       <ToTop />

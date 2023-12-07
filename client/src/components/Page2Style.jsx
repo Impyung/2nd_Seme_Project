@@ -6,15 +6,18 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%; // 너비를 화면의 100%로 설정
-  height: 100vh; // 높이를 화면의 100%로 설정
+  min-height: 100vh;
 `;
 
 
 export const Body = styled.div`
   position: relative;
-  height: auto;
   color: #f4f3f3;
-  background: linear-gradient(0deg, #2A2F42 30%, #1C1E2C 70%); // Adjust the gradient direction and color stops
+  background: linear-gradient(0deg, #2A2F42 30%, #1C1E2C 70%);
+`;
+
+export const RcmdContainer = styled.div`
+  min-height:100vh;
 `;
 
 export const Header = styled.div`

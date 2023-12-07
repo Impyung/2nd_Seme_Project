@@ -3,23 +3,24 @@ import { PieChart } from './Pie';
 import GenreData from './GenreData';
 
 const ChartContainer = styled.div`
+  display: grid;
   position: relative;
-  top: 16vh;
+  top: 20vh;
   text-align: center; // 차트와 타이틀을 중앙 정렬
   padding-bottom: 80px; // 영화 목록과의 간격
+  width: 100%;
+  justify-content: center;
 `;
 
 const ChartTopInfo = styled.div`
   position: relative;
-  width: 410px;
-  height: 79px;
-  left: 10vw;
-  top: 25vh;
+  width: 600px;
+  height: 60px;
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
-  line-height: 35px;
+  line-height: 55px;
   color: #f4f3f3;
   text-align: center;
   align-items: center;
@@ -29,9 +30,11 @@ const ChartTopInfo = styled.div`
 `;
 
 const ChartImage = styled.div`
+  width: 350px;
+  margin: 30px 0px;
+  left: 125px;
   position: relative;
-  display: inline-block; // 차트를 인라인 블록으로 만들어 중앙 정렬 가능하게 함
-  margin: auto;
+  /* margin: auto; */
 `;
 
 function Chart({ setSelectedGenre, selectedGenre, responseData }) {
@@ -52,10 +55,12 @@ function Chart({ setSelectedGenre, selectedGenre, responseData }) {
     console.log(`장르 ID ${thirdGenreId}의 등장 횟수:`, thirdGenreCount);
   }
   return (
+    <>
+  
     <ChartContainer>
-      <ChartTopInfo>
+    <ChartTopInfo>
         {localStorage.username}님의 관람 기록중
-        <br /> 가장 많이 보신 장르 top3입니다.
+        가장 많이 보신 장르 top3입니다.
       </ChartTopInfo>
       <ChartImage>
         <PieChart
@@ -65,6 +70,7 @@ function Chart({ setSelectedGenre, selectedGenre, responseData }) {
         />
       </ChartImage>
     </ChartContainer>
+    </>
   );
 }
 

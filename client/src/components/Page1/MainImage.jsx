@@ -46,8 +46,8 @@ const MainImage = ({ image, title, text, onImageClick }) => {
   return (
     <ImageContainer image={image} onClick={()=>ImageClick(title)} >
       <div>
-        <h2 style={{fontSize:'1.7vw'}}>{title}</h2>
-        <p style={{ fontSize: '1.2vw' }}>{truncatedText}</p>
+        <h2 style={{fontSize:'3.7vh'}}>{title}</h2>
+        <p style={{ fontSize: '2.2vh' }}>{truncatedText}</p>
       </div>
     </ImageContainer>
   );
