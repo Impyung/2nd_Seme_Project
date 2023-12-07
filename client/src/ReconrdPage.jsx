@@ -43,6 +43,7 @@ const RecordsContainer = styled.div`
 
 const RecordCard = styled.div`
   width: 210px;
+  height: 230px;
   display: flex;
   text-align: left;
   margin-top: 35px;
@@ -59,6 +60,7 @@ const RecordImage = styled.img`
 const RecordBox = styled.div`
   margin-left: 20px;
   white-space: nowrap;
+  line-height: 35px;
 `;
 
 const RecordTitle = styled.span`
@@ -69,7 +71,7 @@ const RecordTime = styled.span`
   // Add any specific styles for record title
 `;
 
-const RecordTheather = styled.span`
+const RecordRating = styled.span`
   // Add any specific styles for record title
 `;
 
@@ -190,6 +192,7 @@ function Page8() {
   const [recommendations, setRecommendations] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
+  const [movieRatings, setMovieRatings] = useState({});
 
   const getRecommendations = () => {
     axios
@@ -202,7 +205,6 @@ function Page8() {
         console.error('There was an error!', error);
       });
   };
-
 
   const fetchMovieDetails = async (title) => {
     const KEY = '0d38cc635c10e090910f3d7ea7194e05';
@@ -294,13 +296,16 @@ function Page8() {
         rating: rating,
       };
 
-      console.log(payload.title,payload.rating);
-
       axios.post('http://localhost:3000/rating', payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
+
+      setMovieRatings((prevRatings) => ({
+        ...prevRatings,
+        [selectedMovie.title]: rating,
+      }));
 
       // 평점 입력창 숨기기
       setShowRatingInput(false);
@@ -350,12 +355,16 @@ function Page8() {
                 <RecordBox>
                   <RecordTitle>제목 : {record.title}</RecordTitle>
                   <br />
-                  <br />
                   <RecordTime>
                     관람일 : {formatDate(record.viewDate)}
                   </RecordTime>
                   <br />
-                  {/* <RecordTheather>관람극장 : CGV명동</RecordTheather> */}
+                  <RecordRating>
+                    사용자 평점 :
+                    {movieRatings[record.title]
+                      ? ` ${movieRatings[record.title]}점`
+                      : ' 평점 없음'}
+                  </RecordRating>
                   <br />
                   {!showRatingInput && (
                     <RatingButton onClick={() => openRatingInput(record)}>

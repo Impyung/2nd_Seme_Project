@@ -35,6 +35,7 @@ const LandingPage = () => {
   const [Movies, setMovies] = useState([]); //배열로 값을받기 때문
   const [MainMovieImage, setMainMovieImage] = useState(null);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
+  const [intervalId, setIntervalId] = useState(null);
 
   useEffect(() => {
     const endpoint = `${API_URL}movie/upcoming?api_key=${API_KEY}&language=ko-KR&page=1`;
@@ -49,16 +50,22 @@ const LandingPage = () => {
   }, []);
   const [arrowRight, setArrowRight] = useState(false);
   const goToNextMovie = () => {
+    clearInterval(intervalId); // Clear existing interval
     setCurrentMovieIndex((prevIndex) => (prevIndex + 1) % Movies.length);
-    setArrowRight(!arrowRight); // Toggle the arrow direction
+    const newIntervalId = setInterval(() => {
+      setCurrentMovieIndex((prevIndex) => (prevIndex + 1) % Movies.length);
+    }, 5000); // Start a new interval
+    setIntervalId(newIntervalId); // Store the new interval ID
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const newIntervalId = setInterval(() => {
       setCurrentMovieIndex((prevIndex) => (prevIndex + 1) % Movies.length);
-    }, 5000); // 5초 간격으로 변경
+    }, 5000);
 
-    return () => clearInterval(interval);
+    setIntervalId(newIntervalId); // Store the interval ID
+
+    return () => clearInterval(newIntervalId); // Clear interval on component unmount
   }, [Movies]);
   const currentMovie = Movies[currentMovieIndex];
 
