@@ -46,6 +46,8 @@ const TitleButton = styled.button`
   background: #1C1E2C;
   color: #f4f3f3;
   font-family: 'Noto Sans KR', sans-serif;
+  overflow: hidden;       /* 내용이 넘칠 경우 숨김 */
+  text-overflow: ellipsis; /* 넘치는 텍스트를 생략 부호로 표시 */
   white-space: nowrap;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
