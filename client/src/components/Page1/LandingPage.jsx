@@ -39,7 +39,6 @@ const LandingPage = ({selectedMovie}) => {
 
   const handleImageClick = (movieTitle) => {
     navigate('/page6', { state: { searchQuery: movieTitle } });
-    console.log(movieTitle);
   };
 
 
@@ -49,7 +48,6 @@ const LandingPage = ({selectedMovie}) => {
     fetch(endpoint)
       .then((response) => response.json()) //응답을 json형태로 변경하여 then의 response에 반환
       .then((response) => {
-        console.log(response);
         const moviesWithOverview = response.results.filter(movie => movie.overview && movie.overview.trim() !== '');
         setMovies([...moviesWithOverview]); // overview가 있는 영화들만 설정
         setMainMovieImage(MainMovieImage || moviesWithOverview[0]);

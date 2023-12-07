@@ -53,7 +53,6 @@ const MovieButton = styled.button`
   }
 `;
 function Movie({onSelectMovie, poster_path, title, overview, genre_ids}) {
-    console.log(genre_ids)
     
     return (
         <MovieButton onClick={() => onSelectMovie({ poster_path, title, overview })}>

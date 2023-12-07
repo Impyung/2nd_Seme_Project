@@ -4,6 +4,9 @@ import PageButton from './components/Share/PageButton';
 import Login from './components/Share/Login';
 import Search from './components/Share/Search';
 import Movie from './components/Page6/MovieDB';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+dayjs.locale('ko');
 import {
   ResultContainer,
   ResultGroup,
@@ -40,6 +43,24 @@ function Page6() {
   const [NAME, setNAME] = useState('');
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState('');
+  const [movieData, setMovieData] = useState([]);
+  const [currentDate, setCurrentDate] = useState(
+    dayjs().subtract(1, 'day').format('YYYYMMDD')
+  );
+  const [overlappingMovies, setOverlappingMovies] = useState([]);
+
+  const getNowMovies = async () => {
+    // searchName 파라미터 추가
+    const koficResponse = await (
+      await fetch(
+        `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=c41addc3237a2809a6569efc778d609e&targetDt=${currentDate}`
+      )
+    ).json();
+    const boxOfficeData = koficResponse.boxOfficeResult.dailyBoxOfficeList;
+    const filteredMovies = boxOfficeData.filter(movie => movie.movieNm !== '괴물'); // '괴물' 영화 제외
+    const movieTitles = filteredMovies.map(movie => movie.movieNm);
+    setMovieData(movieTitles);
+  };
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -49,6 +70,21 @@ function Page6() {
       setUsername(decodedToken.username);
     }
   }, []);
+
+  
+  const Overlap = () => {
+    const newOverlappingMovies = [];
+    movies.forEach(movie => {
+      if (movieData.includes(movie.title)) {
+        newOverlappingMovies.push(movie);
+      }
+    });
+    setOverlappingMovies(newOverlappingMovies);
+  }
+
+  useEffect(() => {
+    Overlap();
+  }, [movieData,movies]);
 
   const getMovies = async (searchName) => {
     // searchName 파라미터 추가
@@ -67,6 +103,8 @@ function Page6() {
     if (searchQuery) {
       setNAME(searchQuery);
       getMovies(searchQuery); // 직접 검색어 전달
+      getNowMovies();
+      Overlap();
     }
   }, [searchQuery]);
 
@@ -162,7 +200,7 @@ const onSelectMovie = (movie) => {
               ))}{' '}
             </ResultGroup>
           )}
-          {selectedMovie && <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />}
+          {selectedMovie && <MovieModal movie={selectedMovie} overlap={overlappingMovies} onClose={() => setSelectedMovie(null)} />}
 
         </ResultContainer>
         {/* {NAME ? <Page6Scroll /> : null} */}
