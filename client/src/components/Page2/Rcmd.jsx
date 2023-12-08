@@ -182,26 +182,46 @@ function Rcmd({ selectedGenre }) {
     const URL = 'https://api.themoviedb.org/3';
 
     const promises = titles.map(async (title) => {
-      // console.log("Fetching movie details for titles: ", titles);
-
+      // Search for the movie by title
       const tmdbResponse = await fetch(
         `${URL}/search/movie?api_key=${KEY}&language=ko-KR&page=1&query=${title}`
       );
       const tmdbJson = await tmdbResponse.json();
-      const movie = tmdbJson.results[0];
-      if (movie) {
+      // Filter out movies without a poster
+      const moviesWithPoster = tmdbJson.results.filter(
+        (movie) => movie.poster_path
+      );
+
+      if (moviesWithPoster.length > 0) {
+        const movie = moviesWithPoster[0]; // Taking the first movie that has a poster
+        // Fetch additional movie details by movie ID
+        const movieDetailsResponse = await fetch(
+          `${URL}/movie/${movie.id}?api_key=${KEY}&language=ko-KR&append_to_response=credits`
+        );
+        const movieDetailsJson = await movieDetailsResponse.json();
+        const director = movieDetailsJson.credits.crew.find(
+          (person) => person.job === 'Director'
+        );
+        const genres = movieDetailsJson.genres
+          .slice(0, 2)
+          .map((genre) => genre.name);
+
         return {
           title,
-          posterUrl: movie.poster_path
-            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-            : null,
+          posterUrl: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
           vote_average: movie.vote_average,
-          // 추가적으로 필요한 정보를 여기에 추가
+          release_date: movie.release_date,
+          director: director ? director.name : 'Director not found',
+          genres: genres.join(' / '),
         };
       }
-      return { title, posterUrl: null, vote_average: null };
+
+      // If no movies with posters are found, return null or an empty object
+      return null;
     });
-    return Promise.all(promises);
+
+    // Filter out any null results
+    return (await Promise.all(promises)).filter((movie) => movie !== null);
   };
 
   useEffect(() => {
@@ -275,13 +295,13 @@ function Rcmd({ selectedGenre }) {
                       : movie.vote_average.toFixed(1)}
                   </GradeInfo>
                   <Link
-                    key={index}
-                    to={`/page4?voteAvg=${movie.vote_average}&posterUrl=${movie.posterUrl}&directorName=${movie.director}&releaseDate=${movie.release_date}&genres=${movie.genres}&title=${movie.title}`}
+                    to={`/page4?title=${encodeURIComponent(movie.title)}&voteAvg=${movie.vote_average}&posterUrl=${encodeURIComponent(movie.posterUrl)}&directorName=${encodeURIComponent(movie.director)}&releaseDate=${encodeURIComponent(movie.release_date)}&genres=${encodeURIComponent(movie.genres)}`}
                   >
-                    <ReservInfo onClick={() => ReservData(movie.title)}>
-                      예매
-                    </ReservInfo>
-                  </Link>
+              <ReservInfo onClick={() => ReservData(movie.title)}>
+                예매
+              </ReservInfo>
+            </Link>
+
                 </ImageInfo>
               </div>
             ))}
