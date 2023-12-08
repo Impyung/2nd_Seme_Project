@@ -210,8 +210,9 @@ def recommend_all_movies():
     return jsonify(recommended_titles)
 
 
-# if __name__ == '__main__':
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, ssl_context=('../../2nd_Seme_Back/rootca.crt', '../../2nd_Seme_Back/rootca.key'))
+
 
 
 

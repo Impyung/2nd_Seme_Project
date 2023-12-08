@@ -160,7 +160,9 @@ function Page4() {
 
   const getRecommendations = (title) => {
     axios
-      .get(`http://127.0.0.1:5000/movies?title=${encodeURIComponent(title)}`)
+      .get(
+        `https://43.200.133.130:5000/movies?title=${encodeURIComponent(title)}`
+      )
       .then(async (response) => {
         const recommendedTitles = response.data.recommendations;
         const detailedRecommendations = await Promise.all(
@@ -201,7 +203,7 @@ function Page4() {
     // }
 
     // axios
-    //   .post('http://43.200.133.130:3000//movieView', data1)
+    //   .post('https://43.200.133.130:3000//movieView', data1)
     //   .then((response) => {
     //     // Handle the response here
     //     console.log(response.data);
@@ -327,19 +329,19 @@ function Page4() {
               <MovieBox>
                 <h2>'{title}' 관련 추천 영화</h2>
                 <h3>영화를 클릭해 정보를 볼 수 있습니다.</h3>
-                {isLoading ?
-                  (<GridContainer>
+                {isLoading ? (
+                  <GridContainer>
                     <Grid color="#2f5792" height={250} width={150} />
                     <Grid color="#2f5792" height={250} width={150} />
                     <Grid color="#2f5792" height={250} width={150} />
-                  </GridContainer>)
-                :
-                (<RecommendationsDisplay
-                  id="RcmdDP"
-                  recommendations={recommendations}
-                  onMovieSelect={handleMovieSelection}
-                />)
-                }
+                  </GridContainer>
+                ) : (
+                  <RecommendationsDisplay
+                    id="RcmdDP"
+                    recommendations={recommendations}
+                    onMovieSelect={handleMovieSelection}
+                  />
+                )}
                 {isModalVisible && (
                   <MovieDetailsModal
                     movie={movieDetails}

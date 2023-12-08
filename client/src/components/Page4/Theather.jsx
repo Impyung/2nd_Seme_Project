@@ -74,7 +74,7 @@ function formatDate(inputDate) {
 function handleCinemaClick(theatertype, code, date) {
   if (theatertype == 'cgv') {
     window.location.href =
-      'http://www.cgv.co.kr/theaters/?areacode=01&theaterCode=' +
+      'https://www.cgv.co.kr/theaters/?areacode=01&theaterCode=' +
       code +
       '&date=' +
       formatDate(date);
@@ -89,7 +89,7 @@ function handleCinemaClick(theatertype, code, date) {
 }
 
 // eslint-disable-next-line react/prop-types
-function Theather({ nData, movieName, tData, date}) {
+function Theather({ nData, movieName, tData, date }) {
   const [data2, setData2] = useState([]);
   const [currentDate, setCurrentDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [selectedDate, setSelectedDate] = useState(currentDate);
@@ -113,16 +113,36 @@ function Theather({ nData, movieName, tData, date}) {
         );
       }
     }
-    // 가격순 정렬 
+    // 가격순 정렬
     else if (selectedType === 'price') {
       for (let i = 0; i < sortedData.length; i++) {
         sortedData[i] = sortedData[i].sort((a, b) => {
           // 1순위 조건 체크
-          let isAFirstPriority = ['RECLINER', 'THEBOUTIQUE', 'BOUTIQUE', 'PRIVATE', 'SUITE', 'CINE', 'TEMPUR'].some(type => a.screenName.toUpperCase().includes(type));
-          let isBFirstPriority = ['RECLINER', 'THEBOUTIQUE', 'BOUTIQUE', 'PRIVATE', 'SUITE', 'CINE', 'TEMPUR'].some(type => b.screenName.toUpperCase().includes(type));
+          let isAFirstPriority = [
+            'RECLINER',
+            'THEBOUTIQUE',
+            'BOUTIQUE',
+            'PRIVATE',
+            'SUITE',
+            'CINE',
+            'TEMPUR',
+          ].some((type) => a.screenName.toUpperCase().includes(type));
+          let isBFirstPriority = [
+            'RECLINER',
+            'THEBOUTIQUE',
+            'BOUTIQUE',
+            'PRIVATE',
+            'SUITE',
+            'CINE',
+            'TEMPUR',
+          ].some((type) => b.screenName.toUpperCase().includes(type));
           // 2순위 조건 체크
-          let isASecondPriority = ['COMFORT', 'IMAX', '4DX', 'SCREENX'].some(type => a.screenName.toUpperCase().includes(type));
-          let isBSecondPriority = ['COMFORT', 'IMAX', '4DX', 'SCREENX'].some(type => b.screenName.toUpperCase().includes(type));
+          let isASecondPriority = ['COMFORT', 'IMAX', '4DX', 'SCREENX'].some(
+            (type) => a.screenName.toUpperCase().includes(type)
+          );
+          let isBSecondPriority = ['COMFORT', 'IMAX', '4DX', 'SCREENX'].some(
+            (type) => b.screenName.toUpperCase().includes(type)
+          );
           // 3순위 조건 체크
           let isALaser = a.screenName.toUpperCase().includes('LASER');
           let isBLaser = b.screenName.toUpperCase().includes('LASER');
@@ -144,18 +164,20 @@ function Theather({ nData, movieName, tData, date}) {
           }
         });
       }
-    } 
-    
+    }
+
     // 시간순 정렬
-    else if(selectedType==='time'){
+    else if (selectedType === 'time') {
       for (let i = 0; i < sortedData.length; i++) {
-        sortedData[i] = sortedData[i].sort((a, b) => parseTime(a.playTime) - parseTime(b.playTime));
+        sortedData[i] = sortedData[i].sort(
+          (a, b) => parseTime(a.playTime) - parseTime(b.playTime)
+        );
       }
     }
-    setData2(sortedData); 
+    setData2(sortedData);
     console.log(data2);
-  }, [selectedType]); 
-  
+  }, [selectedType]);
+
   // 날짜 선택 후 날짜 업데이트
   useEffect(() => {
     setSelectedDate(date);
@@ -173,7 +195,7 @@ function Theather({ nData, movieName, tData, date}) {
           const response = await axios(
             {
               method: 'get',
-              url: `http://43.200.133.130:3000/crawler/${theaterType}/${code}/${
+              url: `https://43.200.133.130:3000/crawler/${theaterType}/${code}/${
                 selectedDate || currentDate
               }`,
             },
@@ -198,9 +220,9 @@ function Theather({ nData, movieName, tData, date}) {
         promises.push(promise);
       }
       Promise.all(promises).then((results) => {
-        allData.push(...results); 
-        setData2(allData); 
-        setIsDateLoading(false); 
+        allData.push(...results);
+        setData2(allData);
+        setIsDateLoading(false);
       });
     }
   }, [nData, tData, movieName, selectedDate]);
@@ -212,8 +234,11 @@ function Theather({ nData, movieName, tData, date}) {
           nData[index] && (
             <TheatherInfo key={index} style={{ left: '0px', top: `${top}px` }}>
               <TheatherName>{nData[index].place_name}</TheatherName>
-              {isDateLoading && <DataLoad>데이터를 불러오고 있습니다.</DataLoad>}
-              {!isDateLoading &&data2[index] &&
+              {isDateLoading && (
+                <DataLoad>데이터를 불러오고 있습니다.</DataLoad>
+              )}
+              {!isDateLoading &&
+                data2[index] &&
                 data2[index].map((left, timeIndex) => {
                   // Check if data2 and the required indexes in data2 exist
                   const timeInfoData =
@@ -244,10 +269,13 @@ function Theather({ nData, movieName, tData, date}) {
                   );
                 })}
               <DataLoad>
-                {isDateLoading && !data2[index] && '데이터를 불러오고 있습니다.'}
+                {isDateLoading &&
+                  !data2[index] &&
+                  '데이터를 불러오고 있습니다.'}
               </DataLoad>
               <DataLoad>
-                {!isDateLoading &&data2[index] &&
+                {!isDateLoading &&
+                  data2[index] &&
                   data2[index].length === 0 &&
                   '등록된 정보가 없습니다.'}
               </DataLoad>

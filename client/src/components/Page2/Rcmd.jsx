@@ -207,7 +207,7 @@ function Rcmd({ selectedGenre }) {
   useEffect(() => {
     // console.log('Selected Genre: ', selectedGenre);
     fetch(
-      `http://localhost:5000/nowplaying?watched_genres=${encodeURIComponent(
+      `https://43.200.133.130:5000/nowplaying?watched_genres=${encodeURIComponent(
         selectedGenre
       )}`
     )
@@ -254,7 +254,7 @@ function Rcmd({ selectedGenre }) {
             ref={scrollRef}
             style={{
               marginTop: calculateScrollContainerPosition(movieDetails.length),
-              justifyContent: 'center'
+              justifyContent: 'center',
             }}
           >
             {movieDetails.map((movie, index) => (
@@ -275,13 +275,13 @@ function Rcmd({ selectedGenre }) {
                       : movie.vote_average.toFixed(1)}
                   </GradeInfo>
                   <Link
-              key={index}
-              to={`/page4?voteAvg=${movie.vote_average}&posterUrl=${movie.posterUrl}&directorName=${movie.director}&releaseDate=${movie.release_date}&genres=${movie.genres}&title=${movie.title}`}
-            >
-              <ReservInfo onClick={() => ReservData(movie.title)}>
-                예매
-              </ReservInfo>
-            </Link>
+                    key={index}
+                    to={`/page4?voteAvg=${movie.vote_average}&posterUrl=${movie.posterUrl}&directorName=${movie.director}&releaseDate=${movie.release_date}&genres=${movie.genres}&title=${movie.title}`}
+                  >
+                    <ReservInfo onClick={() => ReservData(movie.title)}>
+                      예매
+                    </ReservInfo>
+                  </Link>
                 </ImageInfo>
               </div>
             ))}

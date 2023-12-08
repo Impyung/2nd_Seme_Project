@@ -37,7 +37,6 @@ function Page6() {
     }
   }, [searchQuery]);
 
-
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [NAME, setNAME] = useState('');
@@ -53,12 +52,14 @@ function Page6() {
     // searchName 파라미터 추가
     const koficResponse = await (
       await fetch(
-        `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=c41addc3237a2809a6569efc778d609e&targetDt=${currentDate}`
+        `https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=c41addc3237a2809a6569efc778d609e&targetDt=${currentDate}`
       )
     ).json();
     const boxOfficeData = koficResponse.boxOfficeResult.dailyBoxOfficeList;
-    const filteredMovies = boxOfficeData.filter(movie => movie.movieNm !== '괴물'); // '괴물' 영화 제외
-    const movieTitles = filteredMovies.map(movie => movie.movieNm);
+    const filteredMovies = boxOfficeData.filter(
+      (movie) => movie.movieNm !== '괴물'
+    ); // '괴물' 영화 제외
+    const movieTitles = filteredMovies.map((movie) => movie.movieNm);
     setMovieData(movieTitles);
   };
 
@@ -71,20 +72,19 @@ function Page6() {
     }
   }, []);
 
-  
   const Overlap = () => {
     const newOverlappingMovies = [];
-    movies.forEach(movie => {
+    movies.forEach((movie) => {
       if (movieData.includes(movie.title)) {
         newOverlappingMovies.push(movie);
       }
     });
     setOverlappingMovies(newOverlappingMovies);
-  }
+  };
 
   useEffect(() => {
     Overlap();
-  }, [movieData,movies]);
+  }, [movieData, movies]);
 
   const getMovies = async (searchName) => {
     // searchName 파라미터 추가
@@ -94,7 +94,7 @@ function Page6() {
       )
     ).json();
     // 포스터 이미지가 있는 영화만 필터링
-    const filteredMovies = json.results.filter(movie => movie.poster_path);
+    const filteredMovies = json.results.filter((movie) => movie.poster_path);
     setMovies(filteredMovies);
     setLoading(false);
   };
@@ -124,9 +124,9 @@ function Page6() {
     };
   }, []);
   const GridContainer = styled.div`
-  display: flex; /* Flexbox 사용 */
-  justify-content: space-around;
-`;
+    display: flex; /* Flexbox 사용 */
+    justify-content: space-around;
+  `;
   const fadeInAnimation = `
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -134,26 +134,26 @@ function Page6() {
   }
   `;
 
-const NoResultsContainer = styled.div`
-${fadeInAnimation}
-animation: fadeIn 1s ease-in-out;
-text-align: center;
-height: 60vh;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-`;
-const [selectedMovie, setSelectedMovie] = useState(null);
-const onSelectMovie = (movie) => {
-  setSelectedMovie(movie);
-};
+  const NoResultsContainer = styled.div`
+    ${fadeInAnimation}
+    animation: fadeIn 1s ease-in-out;
+    text-align: center;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  `;
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const onSelectMovie = (movie) => {
+    setSelectedMovie(movie);
+  };
 
-// 이미지와 텍스트 스타일은 그대로 유지합니다.
+  // 이미지와 텍스트 스타일은 그대로 유지합니다.
 
   return (
     <Container>
-    <Header isvisible={isHeaderVisible}>
+      <Header isvisible={isHeaderVisible}>
         <Logo>
           <Link to="/">
             <img
@@ -173,40 +173,56 @@ const onSelectMovie = (movie) => {
         <ResultContainer id="page6scroll">
           {loading ? (
             <GridContainer>
-            <Grid color="#2f5792" height={300} width={200} />
-            <Grid color="#2f5792" height={300} width={200} />
-            <Grid color="#2f5792" height={300} width={200} />
-          </GridContainer>
+              <Grid color="#2f5792" height={300} width={200} />
+              <Grid color="#2f5792" height={300} width={200} />
+              <Grid color="#2f5792" height={300} width={200} />
+            </GridContainer>
           ) : movies.length === 0 ? (
             <NoResultsContainer>
-            <img src="/nojobsfound.png" alt="No results" style={{ maxWidth: '600px', marginBottom: '0px' }} />
-            <p style={{ color: '#FFF', fontSize: '1.2rem', fontFamily: 'Noto Sans KR' }}>
-              검색 결과가 없습니다
-              <br />다른 검색어를 입력해보세요
-            </p>
-          </NoResultsContainer>
+              <img
+                src="/nojobsfound.png"
+                alt="No results"
+                style={{ maxWidth: '600px', marginBottom: '0px' }}
+              />
+              <p
+                style={{
+                  color: '#FFF',
+                  fontSize: '1.2rem',
+                  fontFamily: 'Noto Sans KR',
+                }}
+              >
+                검색 결과가 없습니다
+                <br />
+                다른 검색어를 입력해보세요
+              </p>
+            </NoResultsContainer>
           ) : (
             <ResultGroup>
               {movies.map((movie) => (
                 <MovieItem key={movie.id}>
-                <Movie
-                  poster_path={movie.poster_path}
-                  title={movie.title}
-                  overview={movie.overview}
-                  genre_ids={movie.genre_ids}
-                  onSelectMovie={onSelectMovie}
-                />
-              </MovieItem>
+                  <Movie
+                    poster_path={movie.poster_path}
+                    title={movie.title}
+                    overview={movie.overview}
+                    genre_ids={movie.genre_ids}
+                    onSelectMovie={onSelectMovie}
+                  />
+                </MovieItem>
               ))}{' '}
             </ResultGroup>
           )}
-          {selectedMovie && <MovieModal movie={selectedMovie} overlap={overlappingMovies} onClose={() => setSelectedMovie(null)} />}
-
+          {selectedMovie && (
+            <MovieModal
+              movie={selectedMovie}
+              overlap={overlappingMovies}
+              onClose={() => setSelectedMovie(null)}
+            />
+          )}
         </ResultContainer>
         {/* {NAME ? <Page6Scroll /> : null} */}
       </Body>
       <ToTop />
-      <Footer/>
+      <Footer />
     </Container>
   );
 }

@@ -196,7 +196,7 @@ function Page8() {
 
   const getRecommendations = () => {
     axios
-      .get(`http://127.0.0.1:5000/RcmAllMovie`)
+      .get(`https://43.200.133.130:5000/RcmAllMovie`)
       .then(async (response) => {
         setRecommendations(response.data);
         console.log(recommendations);
@@ -271,9 +271,12 @@ function Page8() {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         };
 
-        const response = await axios.get('http://localhost:3000/userRecord', {
-          headers,
-        });
+        const response = await axios.get(
+          'https://43.200.133.130:3000/userRecord',
+          {
+            headers,
+          }
+        );
 
         setRecords(response.data);
       } catch (error) {
@@ -296,7 +299,7 @@ function Page8() {
         rating: rating,
       };
 
-      axios.post('http://localhost:3000/rating', payload, {
+      axios.post('https://43.200.133.130:3000/rating', payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

@@ -37,7 +37,7 @@ const ScrollContainer = styled.div`
   scrollbar-color: #4f5b93 #2c3440;
 `;
 
-const TitleButton = styled.div  `
+const TitleButton = styled.div`
   margin-top: 5px;
   font-size: 1rem;
   width: 160px;
@@ -72,7 +72,8 @@ const RecommendedMoviesList = ({ title }) => {
       try {
         // 추천된 영화 제목 가져오기
         const response = await axios.get(
-          'http://localhost:5000/movies?title=' + encodeURIComponent(title)
+          'https://43.200.133.130:5000/movies?title=' +
+            encodeURIComponent(title)
         );
         const recommendedTitles = response.data.recommendations;
 
@@ -116,7 +117,10 @@ const RecommendedMoviesList = ({ title }) => {
 
   return (
     <>
-      <DescriptionText>선택하신<br /> "{title}" 영화와 <br /> 유사한 영화들입니다.</DescriptionText>
+      <DescriptionText>
+        선택하신
+        <br /> "{title}" 영화와 <br /> 유사한 영화들입니다.
+      </DescriptionText>
       <ScrollContainer>
         {detailedRecommendations.map((movie, index) => (
           <div key={index} style={itemStyle}>
