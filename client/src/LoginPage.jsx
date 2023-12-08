@@ -48,7 +48,7 @@ function LoginPage() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3000/login', {
+      const res = await axios.post('https://43.200.133.130:3000/login', {
         username,
         password,
       });
@@ -60,14 +60,14 @@ function LoginPage() {
 
       // console.log('로그인 성공:', res.data, '토큰:', token);
 
-      console.log(userId)
+      console.log(userId);
 
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
       alert('로그인 성공!');
       navigate('/');
       axios
-        .post('http://127.0.0.1:5000/token', { userId })
+        .post('https://43.200.133.130:5000/token', { userId })
         .then((response) => {
           // 서버로부터의 응답 처리
           console.log('서버 응답:', response.data);
@@ -112,7 +112,9 @@ function LoginPage() {
               TGI의 <BoldText>MOVIEPARTNER </BoldText>입니다.{' '}
             </span>
           </Welcome>
-          <form onSubmit={handleLogin}> {/* 폼 태그 추가 */}
+          <form onSubmit={handleLogin}>
+            {' '}
+            {/* 폼 태그 추가 */}
             <InputGroup>
               <StyledIcon icon={faUser} />
               <IdInput
@@ -122,7 +124,6 @@ function LoginPage() {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </InputGroup>
-
             <InputGroup>
               <StyledIcon icon={faLock} />
               <PwInput
@@ -132,9 +133,10 @@ function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </InputGroup>
-
-            <LoginButton type="submit">로그인하기</LoginButton> {/* type="submit" 추가 */}
-          </form> {/* 폼 태그 닫기 */}
+            <LoginButton type="submit">로그인하기</LoginButton>{' '}
+            {/* type="submit" 추가 */}
+          </form>{' '}
+          {/* 폼 태그 닫기 */}
           <Caption>
             새로운 회원이신가요? |&nbsp; <Link to="/signup"> 회원가입</Link>
           </Caption>

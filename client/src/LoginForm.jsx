@@ -56,7 +56,7 @@ function LoginForm() {
     const userData = { username, email, password, verificationCode };
     // 서버에서 구동할때는 주소 바꿔야 합니다
     await axios
-      .post('http://localhost:3000/signup', userData)
+      .post('https://43.200.133.130:3000/signup', userData)
       .then((response) => {
         console.log('회원가입 성공:', response.data);
         navigate('/Login');
@@ -70,9 +70,12 @@ function LoginForm() {
 
   const handleSendVerificationCode = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/verification', {
-        email,
-      });
+      const response = await axios.post(
+        'https://43.200.133.130:3000/verification',
+        {
+          email,
+        }
+      );
       alert('인증번호가 전송되었습니다.');
       console.log('인증번호가 전송되었습니다.');
       // 인증번호 전송 후 처리
@@ -85,7 +88,7 @@ function LoginForm() {
 
   const handleVerificationCodeCheck = async () => {
     try {
-      await axios.post('http://localhost:3000/verificationCheck', {
+      await axios.post('https://43.200.133.130:3000/verificationCheck', {
         verNum: verificationCode,
       });
       alert('인증번호 확인 성공');

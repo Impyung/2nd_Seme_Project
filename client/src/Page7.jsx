@@ -107,7 +107,9 @@ function Page7() {
     setSelectedTitle(title);
     setIsTextVisible(false);
     axios
-      .get(`http://127.0.0.1:5000/movies?title=${encodeURIComponent(title)}`)
+      .get(
+        `https://43.200.133.130:5000/movies?title=${encodeURIComponent(title)}`
+      )
       .then(async (response) => {
         const recommendedTitles = response.data.recommendations;
         const detailedRecommendations = await Promise.all(
@@ -200,21 +202,21 @@ function Page7() {
             selectedMovies={selectedMovies}
             getRecommendations={getRecommendations}
           />
-          <br/>
-  
+          <br />
+
           {selectedTitle && (
             <>
-            <hr style={{width:'80%'}}/>
-            <h2
-              style={{
-                paddingTop: '10vh',
-                textAlign: 'center',
-                color: '#FFF',
-                margin: '0',
-              }}
-            >
-              "{selectedTitle && selectedTitle}" 관련 영화
-            </h2>
+              <hr style={{ width: '80%' }} />
+              <h2
+                style={{
+                  paddingTop: '10vh',
+                  textAlign: 'center',
+                  color: '#FFF',
+                  margin: '0',
+                }}
+              >
+                "{selectedTitle && selectedTitle}" 관련 영화
+              </h2>
             </>
           )}
           {selectedTitle && (

@@ -1,7 +1,7 @@
 import useFetchData from './FetchData';
 function GenreData() {
   const { data, loading, error } = useFetchData(
-    'http://localhost:3000/userRecord/'
+    'https://43.200.133.130:3000/userRecord/'
   );
 
   if (loading) return { loading: true };

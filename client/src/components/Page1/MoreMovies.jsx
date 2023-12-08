@@ -121,7 +121,7 @@ function MoreMovies() {
 
     // 기존 로컬 서버로의 요청
     const localServerResponse = await axios.post(
-      'http://localhost:3000/movieView',
+      'https://43.200.133.130:3000/movieView',
       { title: selectedTitle },
       { headers }
     );
@@ -193,7 +193,16 @@ function MoreMovies() {
         }}
       >
         <hr />
-        <h2 style={{fontSize:'1.6vw', fontFamily: 'Noto Sans KR, sans-serif',marginBottom: '-6vh',textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'}}>무비 차트</h2>
+        <h2
+          style={{
+            fontSize: '1.6vw',
+            fontFamily: 'Noto Sans KR, sans-serif',
+            marginBottom: '-6vh',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+          }}
+        >
+          무비 차트
+        </h2>
       </div>
       <MoviesGrid>
         {movieData.map((movie, index) => (

@@ -114,7 +114,7 @@ function BoxOffice() {
     // searchName 파라미터 추가
     const koficResponse = await (
       await fetch(
-        `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=c41addc3237a2809a6569efc778d609e&targetDt=${currentDate}`
+        `https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=c41addc3237a2809a6569efc778d609e&targetDt=${currentDate}`
       )
     ).json();
     const boxOfficeData = koficResponse.boxOfficeResult.dailyBoxOfficeList;
@@ -171,7 +171,6 @@ function BoxOffice() {
     return (await Promise.all(promises)).filter((movie) => movie !== null);
   };
 
-  
   useEffect(() => {
     getMovies();
   }, []);
@@ -201,7 +200,7 @@ function BoxOffice() {
 
       // 기존 로컬 서버로의 요청
       const localServerResponse = await axios.post(
-        'http://localhost:3000/movieView',
+        'https://43.200.133.130:3000/movieView',
         { title: selectedTitle },
         { headers }
       );
@@ -209,7 +208,7 @@ function BoxOffice() {
 
       // Flask 서버로의 요청
       const flaskServerResponse = await axios.get(
-        `http://localhost:5000/movies?title=${encodeURIComponent(
+        `https://43.200.133.130:5000/movies?title=${encodeURIComponent(
           selectedTitle
         )}`
       );
