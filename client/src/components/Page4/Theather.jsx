@@ -109,7 +109,7 @@ function Theather({ nData, movieName, tData, date }) {
     if (selectedType === 'seats') {
       for (let i = 0; i < sortedData.length; i++) {
         sortedData[i] = sortedData[i].sort(
-          (a, b) => parseInt(a.remainingSeats) - parseInt(b.remainingSeats)
+          (a, b) => parseInt(b.remainingSeats) - parseInt(a.remainingSeats)
         );
       }
     }
