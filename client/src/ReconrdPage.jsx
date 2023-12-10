@@ -257,41 +257,6 @@ function Page8() {
     getRecommendations();
   }, []);
 
-  useEffect(() => {
-    const fetchRecords = async () => {
-      try {
-        const token = localStorage.getItem('token');
-
-        if (!token) {
-          window.location.href = '/login';
-          return;
-        }
-
-        const headers = {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        };
-
-        const response = await axios.get(
-          'https://43.200.133.130:3000/userRecord',
-          {
-            headers,
-          }
-        );
-
-        setRecords(response.data);
-      } catch (error) {
-        console.error('시청 기록을 가져오는 중 오류 발생:', error);
-      }
-    };
-
-    fetchRecords();
-  }, []);
-
-  const openRatingInput = (movie) => {
-    setSelectedMovie(movie);
-    setShowRatingInput(true);
-  };
-
   const submitRating = () => {
     try {
       const payload = {
@@ -320,6 +285,49 @@ function Page8() {
       setShowRatingInput(false);
       setRating('5');
     }
+  };
+
+  useEffect(() => {
+    const fetchRecords = async () => {
+      try {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+          window.location.href = '/login';
+          return;
+        }
+
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+
+        // 시청 기록 가져오기
+        const response = await axios.get(
+          'https://43.200.133.130:3000/userRecord',
+          { headers }
+        );
+        const recordsData = response.data;
+        setRecords(recordsData);
+
+        // 평점 정보 초기화
+        const newRatings = {};
+        recordsData.forEach((record) => {
+          if (record.rating) {
+            newRatings[record.title] = record.rating;
+          }
+        });
+        setMovieRatings(newRatings);
+      } catch (error) {
+        console.error('시청 기록을 가져오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchRecords();
+  }, []);
+
+  const openRatingInput = (movie) => {
+    setSelectedMovie(movie);
+    setShowRatingInput(true);
   };
 
   function formatDate(dateString) {
